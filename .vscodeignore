@@ -1,0 +1,11 @@
+src/**
+out/**
+build/**
+node_modules/**
+.vscode/**
+.gitignore
+**/tsconfig.json
+**/tslint.json
+**/*.map
+**/*.ts
+test-workspace

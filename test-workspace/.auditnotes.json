@@ -1,0 +1,92 @@
+{
+  "files": {
+    "Contract.sol": {
+      "lines": 26,
+      "state": "pending",
+      "notes": {
+        "1": {
+          "length": 1,
+          "type": "note",
+          "state": "discarded",
+          "message": "fvdv"
+        },
+        "5": {
+          "length": 1,
+          "type": "issue",
+          "state": "confirmed",
+          "message": "una issu rnd"
+        },
+        "10": {
+          "length": 1,
+          "type": "note",
+          "state": "confirmed",
+          "message": "open"
+        },
+        "13": {
+          "length": 1,
+          "type": "note",
+          "state": "confirmed",
+          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        },
+        "17": {
+          "length": 1,
+          "type": "issue",
+          "state": "confirmed",
+          "message": "sdgf"
+        },
+        "19": {
+          "length": 1,
+          "type": "note",
+          "state": "open",
+          "message": "vcbngfn"
+        },
+        "22": {
+          "length": 3,
+          "type": "note",
+          "state": "discarded",
+          "message": "revisa esto"
+        }
+      }
+    },
+    "src\\SubContract.sol": {
+      "lines": 26,
+      "state": "reviewed",
+      "notes": {
+        "5": {
+          "length": 3,
+          "type": "issue",
+          "state": "confirmed",
+          "message": "this is too bad"
+        },
+        "16": {
+          "length": 1,
+          "type": "note",
+          "state": "confirmed",
+          "message": "nota 1"
+        },
+        "22": {
+          "length": 4,
+          "type": "note",
+          "state": "confirmed",
+          "message": "nota 2"
+        }
+      }
+    },
+    ".auditnotes.json": {
+      "lines": 64,
+      "state": "pending",
+      "notes": {}
+    },
+    "src\\lib\\SubContract.sol": {
+      "lines": 16,
+      "state": "pending",
+      "notes": {}
+    }
+  },
+  "exclude": [
+    ".auditnotes.json",
+    ".git",
+    ".vscode",
+    "node_modules"
+  ]
+}

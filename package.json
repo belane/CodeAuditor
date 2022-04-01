@@ -1,0 +1,244 @@
+{
+	"name": "code-auditor",
+	"displayName": "CodeAuditor",
+	"description": "Code Auditor Notebook",
+	"icon": "resources/code-auditor.png",
+	"version": "0.2.4",
+	"publisher": "red4sec",
+	"author": {
+        "name": "Red4Sec Cybersecurity"
+    },
+	"license": "Apache",
+	"homepage": "https://github.com/Red4Sec/CodeAuditor",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Red4Sec/CodeAuditor.git"
+	},
+	"bugs": {
+        "url": "https://github.com/Red4Sec/CodeAuditor/issues"
+    },
+	"engines": {
+		"vscode": "^1.34.0"
+	},
+	"keywords": [
+        "audit",
+        "code audit",
+		"audit-tag",
+        "tag",
+        "mark",
+        "selection",
+        "highlight"
+    ],
+    "categories": [
+		"Notebooks",
+        "Programming Languages",
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:code-auditor.newNote",
+		"onCommand:code-auditor.removeNote",
+		"onCommand:code-auditor.generateReport",
+		"onCommand:code-auditor.setNoteState",
+		"onView:code-auditor.noteExplorer"
+	],
+	"main": "./dist/codeauditor.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "code-auditor.newNote",
+				"title": "Audit: New note",
+				"icon": {
+					"light": "resources/light/new-file.svg",
+					"dark": "resources/dark/new-file.svg"
+				}
+			},
+			{
+				"command": "code-auditor.removeNote",
+				"title": "Audit: Remove note",
+				"icon": {
+					"light": "resources/light/remove.svg",
+					"dark": "resources/dark/remove.svg"
+				}
+			},
+			{
+				"command": "code-auditor.reopenNote",
+				"title": "Audit: Re-Open note",
+				"icon": {
+					"light": "resources/light/issue-reopened.svg",
+					"dark": "resources/dark/issue-reopened.svg"
+				}
+			},
+			{
+				"command": "code-auditor.toggleType",
+				"title": "Audit: Toggle Note/Issue type",
+				"icon": {
+					"light": "resources/light/word-wrap.svg",
+					"dark": "resources/dark/word-wrap.svg"
+				}
+			},
+			{
+				"command": "code-auditor.generateReport",
+				"title": "Audit: Generate report",
+				"icon": {
+					"light": "resources/light/preview.svg",
+					"dark": "resources/dark/preview.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.toggleNote",
+				"title": "Filter Notes",
+				"icon": {
+					"light": "resources/light/output.svg",
+					"dark": "resources/dark/output.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.toggleIssue",
+				"title": "Filter Issues",
+				"icon": {
+					"light": "resources/light/bug.svg",
+					"dark": "resources/dark/bug.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.toggleOpen",
+				"title": "Filter Open",
+				"icon": {
+					"light": "resources/light/issues.svg",
+					"dark": "resources/dark/issues.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.toggleConfirmed",
+				"title": "Filter confirmed",
+				"icon": {
+					"light": "resources/light/check.svg",
+					"dark": "resources/dark/check.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.toggleDiscarded",
+				"title": "Filter discarded",
+				"icon": {
+					"light": "resources/light/circle-slash.svg",
+					"dark": "resources/dark/circle-slash.svg"
+				}
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "code-auditor.newNote",
+					"group": "navigation@0"
+				},
+				{
+					"command": "code-auditor.removeNote",
+					"group": "navigation@0"
+				},
+				{
+					"command": "code-auditor.reopenNote",
+					"group": "navigation@1"
+				},
+				{
+					"command": "code-auditor.toggleType",
+					"group": "navigation@1"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "code-auditor.generateReport",
+					"when": "viewItem == code-auditor.noteExplorer.node"
+				}
+			],
+			"view/title": [
+				{
+					"command": "code-auditor.filter.toggleNote",
+					"when": "view == code-auditor.noteExplorer",
+					"group": "navigation@1"
+				},
+				{
+					"command": "code-auditor.filter.toggleIssue",
+					"when": "view == code-auditor.noteExplorer",
+					"group": "navigation@0"
+				},
+				{
+					"command": "code-auditor.filter.toggleOpen",
+					"when": "view == code-auditor.noteExplorer",
+					"group": "navigation@4"
+				},
+				{
+					"command": "code-auditor.filter.toggleConfirmed",
+					"when": "view == code-auditor.noteExplorer",
+					"group": "navigation@2"
+				},
+				{
+					"command": "code-auditor.filter.toggleDiscarded",
+					"when": "view == code-auditor.noteExplorer",
+					"group": "navigation@3"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "code-auditor.filter.toggleNote",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.toggleIssue",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.toggleOpen",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.toggleConfirmed",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.toggleDiscarded",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.reopenNote",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.toggleType",
+					"when": "false"
+				}
+			]
+		},
+		"views": {
+			"explorer": [
+				{
+					"id": "code-auditor.noteExplorer",
+					"name": "Audit Notes",
+					"contextualTitle": "Code Auditor Note Explorer",
+					"icon": "resources/dark/list-tree.svg"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run esbuild-base -- --minify",
+		"compile": "tsc -p ./",
+		"package": "npx vsce package -o build",
+		"lint": "eslint . --ext .ts,.tsx",
+		"esbuild-base": "esbuild ./src/codeauditor.ts --bundle --outfile=dist/codeauditor.js --external:vscode --format=cjs --platform=node",
+		"esbuild": "npm run esbuild-base -- --sourcemap",
+		"esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/node": "^12.12.0",
+		"@types/vscode": "^1.34.0",
+		"@typescript-eslint/eslint-plugin": "^4.16.0",
+		"@typescript-eslint/parser": "^4.16.0",
+		"esbuild": "^0.14.27",
+		"eslint": "^7.21.0",
+		"typescript": "^4.5.5"
+	},
+	"dependencies": {
+		"vsce": "^2.7.0"
+	}
+}
