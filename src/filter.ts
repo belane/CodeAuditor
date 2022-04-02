@@ -19,8 +19,8 @@ export function toggleFilter(filter: string) {
     if (currentFilter.hasOwnProperty(filter)) {
         currentFilter[filter] = !currentFilter[filter];
     }
+    vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + filter, currentFilter[filter]);
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
-
 }
 
 export function listFilterNotes() {

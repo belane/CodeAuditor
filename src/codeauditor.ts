@@ -20,19 +20,34 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.removeNote', (line : string) => {
 		removeNote(line);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.toggleNote', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.notesOn', (line : string) => {
 		toggleFilter(noteType.Note);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.toggleIssue', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.notesOff', (line : string) => {
+		toggleFilter(noteType.Note);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.issueOn', (line : string) => {
 		toggleFilter(noteType.Issue);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.toggleOpen', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.issueOff', (line : string) => {
+		toggleFilter(noteType.Issue);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.openOn', (line : string) => {
 		toggleFilter(noteState.Open);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.toggleConfirmed', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.openOff', (line : string) => {
+		toggleFilter(noteState.Open);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.confirmedOn', (line : string) => {
 		toggleFilter(noteState.Confirmed);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.toggleDiscarded', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.confirmedOff', (line : string) => {
+		toggleFilter(noteState.Confirmed);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.discardedOn', (line : string) => {
+		toggleFilter(noteState.Discarded);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.discardedOff', (line : string) => {
 		toggleFilter(noteState.Discarded);
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.setNoteState', (args : string) => {

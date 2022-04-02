@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { dataSource, projectRoot } from './storage';
 import { noteType } from './notes';
-import { listFilterNotes } from './filter';
+import { listFilterNotes, currentFilter } from './filter';
 
 
 export class noteProvider implements vscode.TreeDataProvider<noteNode> {
@@ -12,6 +12,9 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     constructor() {
         vscode.commands.registerCommand('code-auditor.showNote', (file, line) => this.showNote(file, line));
         vscode.commands.registerCommand('code-auditor.noteExplorer.refresh', () => this.refresh());
+        Object.entries(currentFilter).forEach(
+            ([key, value]) => vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + key, value)
+          );
     }
 
     public refresh(): void {

@@ -3,7 +3,7 @@
 	"displayName": "CodeAuditor",
 	"description": "Code Auditor Notebook",
 	"icon": "resources/code-auditor.png",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"publisher": "red4sec",
 	"author": {
         "name": "Red4Sec Cybersecurity"
@@ -85,43 +85,83 @@
 				}
 			},
 			{
-				"command": "code-auditor.filter.toggleNote",
-				"title": "Filter Notes",
+				"command": "code-auditor.filter.notesOn",
+				"title": "Hide Notes",
 				"icon": {
 					"light": "resources/light/output.svg",
 					"dark": "resources/dark/output.svg"
 				}
 			},
 			{
-				"command": "code-auditor.filter.toggleIssue",
-				"title": "Filter Issues",
+				"command": "code-auditor.filter.notesOff",
+				"title": "Show Notes",
+				"icon": {
+					"light": "resources/dark/output.svg",
+					"dark": "resources/light/output.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.issueOn",
+				"title": "Hide Issues",
 				"icon": {
 					"light": "resources/light/bug.svg",
 					"dark": "resources/dark/bug.svg"
 				}
 			},
 			{
-				"command": "code-auditor.filter.toggleOpen",
-				"title": "Filter Open",
+				"command": "code-auditor.filter.issueOff",
+				"title": "Show Issues",
+				"icon": {
+					"light": "resources/dark/bug.svg",
+					"dark": "resources/light/bug.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.openOn",
+				"title": "Hide Open",
 				"icon": {
 					"light": "resources/light/issues.svg",
 					"dark": "resources/dark/issues.svg"
 				}
 			},
 			{
-				"command": "code-auditor.filter.toggleConfirmed",
-				"title": "Filter confirmed",
+				"command": "code-auditor.filter.openOff",
+				"title": "Show Open",
+				"icon": {
+					"light": "resources/dark/issues.svg",
+					"dark": "resources/light/issues.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.confirmedOn",
+				"title": "Hide Confirmed",
 				"icon": {
 					"light": "resources/light/check.svg",
 					"dark": "resources/dark/check.svg"
 				}
 			},
 			{
-				"command": "code-auditor.filter.toggleDiscarded",
-				"title": "Filter discarded",
+				"command": "code-auditor.filter.confirmedOff",
+				"title": "Show Confirmed",
+				"icon": {
+					"light": "resources/dark/check.svg",
+					"dark": "resources/light/check.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.discardedOn",
+				"title": "Hide Discarded",
 				"icon": {
 					"light": "resources/light/circle-slash.svg",
 					"dark": "resources/dark/circle-slash.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.discardedOff",
+				"title": "Show Discarded",
+				"icon": {
+					"light": "resources/dark/circle-slash.svg",
+					"dark": "resources/light/circle-slash.svg"
 				}
 			}
 		],
@@ -152,50 +192,95 @@
 			],
 			"view/title": [
 				{
-					"command": "code-auditor.filter.toggleNote",
-					"when": "view == code-auditor.noteExplorer",
+					"command": "code-auditor.filter.notesOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.note",
 					"group": "navigation@1"
 				},
 				{
-					"command": "code-auditor.filter.toggleIssue",
-					"when": "view == code-auditor.noteExplorer",
+					"command": "code-auditor.filter.notesOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.note",
+					"group": "navigation@1"
+				},
+				{
+					"command": "code-auditor.filter.issueOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.issue",
 					"group": "navigation@0"
 				},
 				{
-					"command": "code-auditor.filter.toggleOpen",
-					"when": "view == code-auditor.noteExplorer",
+					"command": "code-auditor.filter.issueOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.issue",
+					"group": "navigation@0"
+				},
+				{
+					"command": "code-auditor.filter.openOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.open",
 					"group": "navigation@4"
 				},
 				{
-					"command": "code-auditor.filter.toggleConfirmed",
-					"when": "view == code-auditor.noteExplorer",
+					"command": "code-auditor.filter.openOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.open",
+					"group": "navigation@4"
+				},
+				{
+					"command": "code-auditor.filter.confirmedOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.confirmed",
 					"group": "navigation@2"
 				},
 				{
-					"command": "code-auditor.filter.toggleDiscarded",
-					"when": "view == code-auditor.noteExplorer",
+					"command": "code-auditor.filter.confirmedOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.confirmed",
+					"group": "navigation@2"
+				},
+				{
+					"command": "code-auditor.filter.discardedOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.discarded",
+					"group": "navigation@3"
+				},
+				{
+					"command": "code-auditor.filter.discardedOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.discarded",
 					"group": "navigation@3"
 				}
 			],
 			"commandPalette": [
 				{
-					"command": "code-auditor.filter.toggleNote",
+					"command": "code-auditor.filter.notesOn",
 					"when": "false"
 				},
 				{
-					"command": "code-auditor.filter.toggleIssue",
+					"command": "code-auditor.filter.notesOff",
 					"when": "false"
 				},
 				{
-					"command": "code-auditor.filter.toggleOpen",
+					"command": "code-auditor.filter.issueOn",
 					"when": "false"
 				},
 				{
-					"command": "code-auditor.filter.toggleConfirmed",
+					"command": "code-auditor.filter.issueOff",
 					"when": "false"
 				},
 				{
-					"command": "code-auditor.filter.toggleDiscarded",
+					"command": "code-auditor.filter.openOn",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.openOff",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.confirmedOn",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.confirmedOff",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.discardedOn",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.discardedOff",
 					"when": "false"
 				},
 				{
