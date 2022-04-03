@@ -6,21 +6,27 @@
       "notes": {
         "1": {
           "length": 1,
+          "type": "issue",
+          "state": "confirmed",
+          "message": "Wrong pragma"
+        },
+        "2": {
+          "length": 1,
           "type": "note",
-          "state": "discarded",
-          "message": "fvdv"
+          "state": "open",
+          "message": "review license"
         },
         "5": {
           "length": 1,
           "type": "issue",
           "state": "confirmed",
-          "message": "una issu rnd"
+          "message": "Some random issue"
         },
         "10": {
           "length": 1,
           "type": "note",
           "state": "confirmed",
-          "message": "open"
+          "message": "Sort note"
         },
         "13": {
           "length": 1,
@@ -34,17 +40,11 @@
           "state": "confirmed",
           "message": "Regular Issue"
         },
-        "19": {
-          "length": 1,
-          "type": "note",
-          "state": "open",
-          "message": "vcbngfn"
-        },
         "22": {
           "length": 3,
           "type": "note",
           "state": "discarded",
-          "message": "revisa esto"
+          "message": "Review"
         }
       }
     },
@@ -56,19 +56,19 @@
           "length": 3,
           "type": "issue",
           "state": "confirmed",
-          "message": "this is too bad"
+          "message": "Bad issue"
         },
         "16": {
           "length": 1,
           "type": "note",
           "state": "confirmed",
-          "message": "nota 1"
+          "message": "note 1"
         },
         "22": {
           "length": 4,
           "type": "note",
           "state": "confirmed",
-          "message": "nota 2"
+          "message": "note 2"
         }
       }
     },
@@ -81,6 +81,18 @@
       "lines": 16,
       "state": "pending",
       "notes": {}
+    },
+    "src\\lib\\lib.sol": {
+      "lines": 16,
+      "state": "pending",
+      "notes": {
+        "13": {
+          "length": 2,
+          "type": "note",
+          "state": "discarded",
+          "message": "Need it?"
+        }
+      }
     }
   },
   "exclude": [

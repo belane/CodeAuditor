@@ -61,12 +61,12 @@ export function updateDecorators() {
     const currentDoc = vscode.window.activeTextEditor.document;
 
     for ([lineNum, note] of Object.entries(fileData.notes)) {
-        let startSel = parseInt(lineNum) - 1;
+        const startSel = parseInt(lineNum) - 1;
         let endSel = parseInt(lineNum) + note.length - 1;
         if (endSel >= dataSource['files'][sourceCodeFile].lines) {
             endSel = dataSource['files'][sourceCodeFile].lines - 1;
         }
-        let noteSel = new vscode.Range(startSel, 0, endSel, 0);
+        const noteSel = new vscode.Range(startSel, 0, endSel, 0);
         if (!currentDoc.validateRange(noteSel)) { continue; }
 
         let icon: string;
@@ -75,21 +75,21 @@ export function updateDecorators() {
         else if (note.state === 'discarded') { icon = "📘"; }
         else { icon = "📙"; }
 
-        let title = `**${note.type.charAt(0).toUpperCase() + note.type.slice(1)}** *(${note.state})*`;
-        let stateButtons = `- [Confirm](command:code-auditor.setNoteState?"confirmed-${lineNum}") · [Discard](command:code-auditor.setNoteState?"discarded-${lineNum}")`;
-        let msg = `  \`\`\`${note.message}\`\`\``;
-        let editButtons = `[Edit](command:code-auditor.newNote?${lineNum}) · [Remove](command:code-auditor.removeNote?${lineNum})`;
+        const title = `**${note.type.charAt(0).toUpperCase() + note.type.slice(1)}** *(${note.state})*`;
+        const stateButtons = `- [Confirm](command:code-auditor.setNoteState?"confirmed-${lineNum}") · [Discard](command:code-auditor.setNoteState?"discarded-${lineNum}")`;
+        const msg = `  \`\`\`${note.message}\`\`\``;
+        const editButtons = `[Edit](command:code-auditor.newNote?${lineNum}) · [Remove](command:code-auditor.removeNote?${lineNum})`;
 
-        let panelHeader = new vscode.MarkdownString([icon, title, stateButtons].join(' '));
+        const panelHeader = new vscode.MarkdownString([icon, title, stateButtons].join(' '));
         panelHeader.isTrusted = true;
 
-        let panelBody = new vscode.MarkdownString(msg);
+        const panelBody = new vscode.MarkdownString(msg);
         panelBody.isTrusted = true;
 
-        let panelFooter = new vscode.MarkdownString(editButtons);
+        const panelFooter = new vscode.MarkdownString(editButtons);
         panelFooter.isTrusted = true;
 
-        let decoration = {
+        const decoration = {
             range: noteSel,
             hoverMessage: [panelHeader, panelBody, panelFooter],
         };

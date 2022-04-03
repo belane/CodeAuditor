@@ -41,8 +41,8 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     }
 
     private getRootNodes(): noteNode[] {
-        let filteredNotes = listFilterNotes();
-        let nodes: noteNode[] = [];
+        const filteredNotes = listFilterNotes();
+        const nodes: noteNode[] = [];
         let fileName: string;
         let fileNotes: any = {};
 
@@ -50,8 +50,8 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
             if (Object.keys(fileNotes).length === 0) {
                 continue;
             }
-            let label = path.parse(fileName).base;
-            let desc = path.parse(fileName).dir;
+            const label = path.parse(fileName).base;
+            const desc = path.parse(fileName).dir;
             nodes.push(
                 new noteNode(
                     label,
@@ -62,18 +62,18 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
                     true,
                     vscode.TreeItemCollapsibleState.Collapsed
                 )
-            )
+            );
         }
         return nodes;
     }
 
     private getNotes(file: string): noteNode[] {
-        let filteredNotes = listFilterNotes();
-        let nodes: noteNode[] = [];
+        const filteredNotes = listFilterNotes();
+        const nodes: noteNode[] = [];
         let note: any = {};
         let lineNum: string;
         for ([lineNum, note] of Object.entries(filteredNotes[file])) {
-            let afectedLines = note.length > 1 ? `${lineNum} - ${parseInt(lineNum) + note.length - 1}` : lineNum;
+            const afectedLines = note.length > 1 ? `${lineNum} - ${parseInt(lineNum) + note.length - 1}` : lineNum;
             nodes.push(
                 new noteNode(
                     note.message,
@@ -90,14 +90,14 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
         return nodes;
     }
     private showNote(filePath: string, line: string): void {
-        let focusLine = parseInt(line) - 1;
-        let fullPath = path.join(projectRoot, filePath)
+        const focusLine = parseInt(line) - 1;
+        const fullPath = path.join(projectRoot, filePath);
         vscode.workspace.openTextDocument(vscode.Uri.file(fullPath)).then(
             document => {
                 vscode.window.showTextDocument(document).then(
                     editor => {
-                        let posLine: vscode.Position = document.lineAt(focusLine).range.end.with({ character: 0 });
-                        let editorScroll = new vscode.Range(posLine, posLine);
+                        const posLine: vscode.Position = document.lineAt(focusLine).range.end.with({ character: 0 });
+                        const editorScroll = new vscode.Range(posLine, posLine);
                         if (!document.validateRange(editorScroll)) { return; }
                         editor.revealRange(editorScroll, vscode.TextEditorRevealType.InCenter);
                     }
@@ -124,9 +124,7 @@ class noteNode extends vscode.TreeItem {
         this.description = description;
         this.rootNode = rootNode;
         this.contextValue = "code-auditor.noteExplorer.node";
-        if (rootNode) {
-            
-        } else {
+        if (!rootNode) {
             if (type == noteType.Issue) {
                 this.iconPath = {
                     light: path.join(__filename, '..', '..', 'resources/light/bug.svg'),

@@ -7,13 +7,13 @@ type filerOptions = {
     [key: string]: boolean
 }
 
-export var currentFilter: filerOptions = {
+export const currentFilter: filerOptions = {
     note: true,
     issue: true,
     open: true,
     confirmed: true,
     discarded: false
-}
+};
 
 export function toggleFilter(filter: string) {
     if (currentFilter.hasOwnProperty(filter)) {
@@ -29,13 +29,13 @@ export function listFilterNotes() {
         return;
     }
 
-    let nodes: any = [];
-    for (let file in dataSource.files) {
+    const nodes: any = [];
+    for (const file in dataSource.files) {
         if (Object.keys(dataSource.files[file].notes).length === 0) {
             continue;
         }
 
-        let notes: any = {};
+        const notes: any = {};
         let note: any = {};
         let lineNum: string;
 

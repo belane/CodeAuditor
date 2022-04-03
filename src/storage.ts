@@ -4,10 +4,10 @@ import { join } from 'path';
 
 const notesFile = '.auditnotes.json';
 
-var auditFile: string;
+let auditFile: string;
 
-export var dataSource: any;
-export var projectRoot: string;
+export let dataSource: any;
+export let projectRoot: string;
 
 
 export function dataSourceInit() {
@@ -18,7 +18,7 @@ export function dataSourceInit() {
     auditFile = join(projectRoot, notesFile);
 
     if (existsSync(auditFile)) {
-        var fileContent = readFileSync(auditFile);
+        const fileContent = readFileSync(auditFile);
         try { dataSource = JSON.parse(fileContent.toString('utf8')); }
         catch (err) { vscode.window.showErrorMessage(`Fail to process ${notesFile}`); }
     }
@@ -37,7 +37,7 @@ export function dataSourceSave() {
     if (!dataSource) {
         return;
     }
-    var fileWriter = createWriteStream(auditFile);
+    const fileWriter = createWriteStream(auditFile);
     fileWriter.write(JSON.stringify(dataSource, null, 2));
     fileWriter.close();
 }

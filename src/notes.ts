@@ -19,11 +19,11 @@ export enum noteType {
 }
 
 export async function newNote(line?: string) {
-    let [noteContext, ready] = getNoteContext();
+    const [noteContext, ready] = getNoteContext();
     if (!ready || !noteContext) {
         return;
     }
-    let selLine = line && parseInt(line)? line : noteContext["selLine"];
+    const selLine = line && parseInt(line)? line : noteContext["selLine"];
 
     let fileData = dataSource['files'][noteContext["sourceCodeFile"]];
     if (!fileData) {
@@ -31,29 +31,25 @@ export async function newNote(line?: string) {
             "lines": vscode.window.activeTextEditor?.document.lineCount,
             "state": "pending",
             "notes": {}
-        }
+        };
     }
     let note = fileData.notes[selLine];
     if (!note) {
-        let option = await vscode.window.showQuickPick(["$(bug)  Issue", "$(output)  Note"]);
+        const option = await vscode.window.showQuickPick(["$(bug)  Issue", "$(output)  Note"]);
         if (!option) {
             return;
         }
-        var newType : string | undefined = option.toLowerCase().includes(noteType.Issue)? noteType.Issue : noteType.Note;
-    }
-
-    let msg = note ? note.message : '';
-    let inputBox = await promptInputBox(msg);
-    if (!inputBox) {
-        return;
-    }
-
-    if (!note) {
+        const newType : string | undefined = option.toLowerCase().includes(noteType.Issue)? noteType.Issue : noteType.Note;
         note = {
             "length": noteContext["selLength"],
             "type": newType,
             "state": "open"
-        }
+        };
+    }
+
+    const inputBox = await promptInputBox(note.message);
+    if (!inputBox) {
+        return;
     }
 
     note.message = inputBox;
@@ -65,13 +61,13 @@ export async function newNote(line?: string) {
 }
 
 export function removeNote(line?: string) {
-    let [noteContext, ready] = getNoteContext();
+    const [noteContext, ready] = getNoteContext();
     if (!ready || !noteContext) {
         return;
     }
     let selLine = line && parseInt(line)? line : noteContext["selLine"];
     
-    let fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    const fileData = dataSource['files'][noteContext["sourceCodeFile"]];
     if (!fileData) {
         return;
     }
@@ -87,7 +83,7 @@ export function removeNote(line?: string) {
 }
 
 export function setNoteState(state: noteState, line?: string) {
-    let [noteContext, ready] = getNoteContext();
+    const [noteContext, ready] = getNoteContext();
     if (!ready || !noteContext || !state) {
         return;
     }
@@ -96,9 +92,9 @@ export function setNoteState(state: noteState, line?: string) {
         return;
     }
 
-    let selLine = line? line : noteContext["selLine"];
+    const selLine = line? line : noteContext["selLine"];
     
-    let fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    const fileData = dataSource['files'][noteContext["sourceCodeFile"]];
     if (!fileData) {
         return;
     }
@@ -114,13 +110,13 @@ export function setNoteState(state: noteState, line?: string) {
 }
 
 export function setNoteType(line?: string, newType?: noteType) {
-    let [noteContext, ready] = getNoteContext();
+    const [noteContext, ready] = getNoteContext();
     if (!ready || !noteContext) {
         return;
     }
     let selLine = line && parseInt(line)? line : noteContext["selLine"];
     
-    let fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    const fileData = dataSource['files'][noteContext["sourceCodeFile"]];
     if (!fileData) {
         return;
     }
@@ -147,13 +143,13 @@ function getNoteContext(): [any, boolean] {
         return [{}, false];
     }
 
-    let sourceCodeFile = vscode.window.activeTextEditor?.document.fileName.slice(projectRoot.length + 1);
+    const sourceCodeFile = vscode.window.activeTextEditor?.document.fileName.slice(projectRoot.length + 1);
     if (!sourceCodeFile) {
         vscode.window.showErrorMessage("File not found");
         return [{}, false];
     }
 
-    let selection = vscode.window.activeTextEditor.selection;
+    const selection = vscode.window.activeTextEditor.selection;
     return [
         {
             "sourceCodeFile": sourceCodeFile,
@@ -165,8 +161,8 @@ function getNoteContext(): [any, boolean] {
 }
 
 function searchNoteLine(file: string, line: number): number {
-    for (var i = line; i > 0; i--) {
-        let candidate = dataSource['files'][file].notes[i];
+    for (let i = line; i > 0; i--) {
+        const candidate = dataSource['files'][file].notes[i];
         if (candidate && i + candidate.length > line) {
             return i;
         }
