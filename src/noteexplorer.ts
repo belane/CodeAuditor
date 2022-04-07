@@ -43,11 +43,9 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     private getRootNodes(): noteNode[] {
         const filteredNotes = listFilterNotes();
         const nodes: noteNode[] = [];
-        let fileName: string;
-        let fileNotes: any = {};
 
-        for ([fileName, fileNotes] of Object.entries(filteredNotes)) {
-            if (Object.keys(fileNotes).length === 0) {
+        for (const [fileName, fileInfo] of Object.entries(filteredNotes)) {
+            if (Object.keys(fileInfo.notes).length === 0) {
                 continue;
             }
             const label = path.parse(fileName).base;
@@ -70,13 +68,11 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     private getNotes(file: string): noteNode[] {
         const filteredNotes = listFilterNotes();
         const nodes: noteNode[] = [];
-        let note: any = {};
-        let lineNum: string;
-        for ([lineNum, note] of Object.entries(filteredNotes[file])) {
+        for (const [lineNum, note] of Object.entries(filteredNotes[file].notes)) {
             const afectedLines = note.length > 1 ? `${lineNum} - ${parseInt(lineNum) + note.length - 1}` : lineNum;
             nodes.push(
                 new noteNode(
-                    note.message,
+                    note.message || 'none',
                     note.type,
                     file,
                     afectedLines,

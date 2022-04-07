@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { auditData } from './storage';
-import { noteType, noteState, Note } from './types';
+import { noteType, noteState, NoteCollection, FileCollection } from './types';
 
 
 type filerOptions = {
@@ -23,23 +23,21 @@ export function toggleFilter(filter: string) {
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
 }
 
-export function listFilterNotes() {
+export function listFilterNotes(): FileCollection {
+    const nodes: FileCollection = {};
     if (!auditData) {
         vscode.window.showErrorMessage("Extension not ready");
-        return;
+        return nodes;
     }
 
-    const nodes: any = [];
-    for (const sourceCodeFile in auditData.files) {
-        if (Object.keys(auditData.files[sourceCodeFile].notes).length === 0) {
+    for (const [fileName, fileInfo] of Object.entries(auditData.files)) {
+
+        if (Object.keys(fileInfo.notes).length === 0) {
             continue;
         }
 
-        const notes: any = {};
-        let note: Note;
-        let lineNum: string;
-
-        for ([lineNum, note] of Object.entries(auditData.files[sourceCodeFile].notes)) {
+        const notes: NoteCollection = {};
+        for (const [lineNum, note] of Object.entries(fileInfo.notes)) {
             if (!currentFilter.note && note.type == noteType.Note) {
                 continue;
             }
@@ -55,9 +53,13 @@ export function listFilterNotes() {
             if (!currentFilter.discarded && note.state == noteState.Discarded) {
                 continue;
             }
-            notes[lineNum] = note;
+            notes[parseInt(lineNum)] = note;
         }
-        nodes[sourceCodeFile] = notes;
+        nodes[fileName] = {
+            lines: fileInfo.lines,
+            state: fileInfo.state,
+            notes: notes
+        };
     }
     return nodes;
 }

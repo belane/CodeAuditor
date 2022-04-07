@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Note, noteState, noteType } from './types';
+import { noteState, noteType } from './types';
 import { auditData, projectRoot } from './storage';
 
 
@@ -56,16 +56,13 @@ export function updateDecorators() {
     }
 
     const noteNotes = [], issueNotes = [], openNotes = [], discardedNotes = [];
-    let note: Note;
-    let lineNum: string;
     const currentDoc = vscode.window.activeTextEditor.document;
 
-    //for ([lineNum, note] of Object.entries(fileData.notes)) {
-    for ([lineNum, note] of Object.entries(fileData.notes)) {
+    for (const [lineNum, note] of Object.entries(fileData.notes)) {
         const startSel = parseInt(lineNum) - 1;
         let endSel = startSel + note.length;
-        if (endSel >= auditData.files[sourceCodeFile].lines) {
-            endSel = auditData.files[sourceCodeFile].lines - 1;
+        if (endSel >= fileData.lines) {
+            endSel = fileData.lines - 1;
         }
         const noteSel = new vscode.Range(startSel, 0, endSel, 0);
         if (!currentDoc.validateRange(noteSel)) { continue; }

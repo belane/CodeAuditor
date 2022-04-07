@@ -8,13 +8,12 @@ export function generateReport(out: vscode.OutputChannel) {
         vscode.window.showErrorMessage("Extension not ready");
         return;
     }
-    let fileName: string;
-    let fileNotes: any = {};
-    for ([fileName, fileNotes] of Object.entries(listFilterNotes())) {
+    for (const [fileName, fileInfo] of Object.entries(listFilterNotes())) {
+        if (Object.keys(fileInfo.notes).length === 0) {
+            continue;
+        }
         out.appendLine(`${fileName}`);
-        let note: any = {};
-        let lineNum: string;
-        for ([lineNum, note] of Object.entries(fileNotes)) {
+        for (const [lineNum, note] of Object.entries(fileInfo.notes)) {
             let afectedLines = note.length > 1 ? `${lineNum}:${parseInt(lineNum) + note.length - 1}` : lineNum;
             if (afectedLines.length < 4) { afectedLines += '\t'; }
             out.appendLine(`\t${afectedLines}\t- ${note.type}: ${note.state}\t=> ${note.message}`);

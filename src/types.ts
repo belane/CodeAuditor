@@ -22,13 +22,21 @@ export type Note = {
     state: noteState;
 }
 
-export type FileNotes = {
+export type NoteCollection = {
+    [key: number]: Note ;
+}
+
+export type FileCollection = {
+    [key: string]: FileInfo ;
+}
+
+export type FileInfo = {
     lines: number;
     state: fileState;
-    notes:{ [key: number]: Note };
+    notes: NoteCollection;
 }
 
 export interface CodeAuditorData {
     exclude: string[];
-    files: { [key: string]: FileNotes };
+    files: FileCollection;
 }
