@@ -1,16 +1,16 @@
 import * as vscode from 'vscode';
 import { existsSync, readFileSync, createWriteStream } from 'fs';
 import { join } from 'path';
+import  { CodeAuditorData } from './types';
+
 
 const notesFile = '.auditnotes.json';
-
 let auditFile: string;
 
-export let dataSource: any;
+export let auditData: CodeAuditorData;
 export let projectRoot: string;
 
-
-export function dataSourceInit() {
+export function auditDataInit() {
     if (!vscode.workspace.workspaceFolders) {
         return;
     }
@@ -19,58 +19,28 @@ export function dataSourceInit() {
 
     if (existsSync(auditFile)) {
         const fileContent = readFileSync(auditFile);
-        try { dataSource = JSON.parse(fileContent.toString('utf8')); }
+        try { auditData = JSON.parse(fileContent.toString('utf8')); }
         catch (err) { vscode.window.showErrorMessage(`Fail to process ${notesFile}`); }
     }
-    if (!dataSource) {
-        dataSource = {};
+    if (!auditData) {
+        auditData = {
+            exclude: [notesFile, '.git', '.vscode', 'node_modules'],
+            files: {}
+        };
     }
-    if (!dataSource.files) {
-        dataSource['files'] = {};
+    if (!auditData.files) {
+        auditData.files = {};
     }
-    if (!dataSource.exclude) {
-        dataSource['exclude'] = [notesFile, '.git', '.vscode', 'node_modules'];
+    if (!auditData.exclude) {
+        auditData.exclude = [notesFile, '.git', '.vscode', 'node_modules'];
     }
 }
 
-export function dataSourceSave() {
-    if (!dataSource) {
+export function auditDataSave() {
+    if (!auditData) {
         return;
     }
     const fileWriter = createWriteStream(auditFile);
-    fileWriter.write(JSON.stringify(dataSource, null, 2));
+    fileWriter.write(JSON.stringify(auditData, null, 2));
     fileWriter.close();
 }
-
-
-/*
-dataSource =
-{
-    "exclude": [ ".auditnotes.json" ]
-    "files":
-    {
-        "main.go":
-        {
-            "lines": 10,
-            "state": "reviewed/pending/excluded"
-            "notes":
-            {
-                5:
-                {
-                    "length": 2,
-                    "message":"Possible issue",
-                    "type":"note/issue",
-                    "state": "open/confirmed/discarded"
-                },
-                18:
-                {
-                    "length": 1,
-                    "message":"Review",
-                    "type":"note/issue",
-                    "state": "open/confirmed/discarded"
-                }
-            }
-        }
-    }
-};
-*/

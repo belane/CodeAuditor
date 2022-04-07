@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { noteState, noteType } from './notes';
-import { dataSource, projectRoot } from './storage';
+import { Note, noteState, noteType } from './types';
+import { auditData, projectRoot } from './storage';
 
 
 let timeout: NodeJS.Timer | undefined = undefined;
@@ -41,7 +41,7 @@ const discardNoteDecorator = vscode.window.createTextEditorDecorationType({
 });
 
 export function updateDecorators() {
-    if (!vscode.window.activeTextEditor || !dataSource) {
+    if (!vscode.window.activeTextEditor || !auditData) {
         return;
     }
 
@@ -50,29 +50,30 @@ export function updateDecorators() {
         return;
     }
 
-    const fileData = dataSource['files'][sourceCodeFile];
+    const fileData = auditData.files[sourceCodeFile];
     if (!fileData) {
         return;
     }
 
     const noteNotes = [], issueNotes = [], openNotes = [], discardedNotes = [];
-    let note: any = {};
+    let note: Note;
     let lineNum: string;
     const currentDoc = vscode.window.activeTextEditor.document;
 
+    //for ([lineNum, note] of Object.entries(fileData.notes)) {
     for ([lineNum, note] of Object.entries(fileData.notes)) {
         const startSel = parseInt(lineNum) - 1;
-        let endSel = parseInt(lineNum) + note.length - 1;
-        if (endSel >= dataSource['files'][sourceCodeFile].lines) {
-            endSel = dataSource['files'][sourceCodeFile].lines - 1;
+        let endSel = startSel + note.length;
+        if (endSel >= auditData.files[sourceCodeFile].lines) {
+            endSel = auditData.files[sourceCodeFile].lines - 1;
         }
         const noteSel = new vscode.Range(startSel, 0, endSel, 0);
         if (!currentDoc.validateRange(noteSel)) { continue; }
 
         let icon: string;
-        if (note.type === 'note') { icon = "📘"; }
-        else if (note.state === 'confirmed') { icon = "📕"; }
-        else if (note.state === 'discarded') { icon = "📘"; }
+        if (note.type == noteType.Note) { icon = "📘"; }
+        else if (note.state == noteState.Confirmed) { icon = "📕"; }
+        else if (note.state == noteState.Discarded) { icon = "📘"; }
         else { icon = "📙"; }
 
         const title = `**${note.type.charAt(0).toUpperCase() + note.type.slice(1)}** *(${note.state})*`;
@@ -118,7 +119,7 @@ export function updateDecorators() {
     vscode.window.activeTextEditor.setDecorations(discardNoteDecorator, discardedNotes);
 }
 
-export function triggerUpdateDecorations(throttle: boolean = false) {
+export function triggerUpdateDecorations(throttle?: boolean) {
     if (timeout) {
         clearTimeout(timeout);
         timeout = undefined;

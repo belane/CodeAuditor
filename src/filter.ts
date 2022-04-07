@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { dataSource } from './storage';
-import { noteType, noteState } from './notes';
+import { auditData } from './storage';
+import { noteType, noteState, Note } from './types';
 
 
 type filerOptions = {
@@ -16,7 +16,7 @@ export const currentFilter: filerOptions = {
 };
 
 export function toggleFilter(filter: string) {
-    if (currentFilter.hasOwnProperty(filter)) {
+    if(Object.prototype.hasOwnProperty.call(currentFilter, filter)) {
         currentFilter[filter] = !currentFilter[filter];
     }
     vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + filter, currentFilter[filter]);
@@ -24,22 +24,22 @@ export function toggleFilter(filter: string) {
 }
 
 export function listFilterNotes() {
-    if (!dataSource) {
+    if (!auditData) {
         vscode.window.showErrorMessage("Extension not ready");
         return;
     }
 
     const nodes: any = [];
-    for (const file in dataSource.files) {
-        if (Object.keys(dataSource.files[file].notes).length === 0) {
+    for (const sourceCodeFile in auditData.files) {
+        if (Object.keys(auditData.files[sourceCodeFile].notes).length === 0) {
             continue;
         }
 
         const notes: any = {};
-        let note: any = {};
+        let note: Note;
         let lineNum: string;
 
-        for ([lineNum, note] of Object.entries(dataSource.files[file].notes)) {
+        for ([lineNum, note] of Object.entries(auditData.files[sourceCodeFile].notes)) {
             if (!currentFilter.note && note.type == noteType.Note) {
                 continue;
             }
@@ -57,7 +57,7 @@ export function listFilterNotes() {
             }
             notes[lineNum] = note;
         }
-        nodes[file] = notes;
+        nodes[sourceCodeFile] = notes;
     }
     return nodes;
 }

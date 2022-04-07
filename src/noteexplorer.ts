@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { dataSource, projectRoot } from './storage';
-import { noteType } from './notes';
+import { auditData, projectRoot } from './storage';
+import { noteType } from './types';
 import { listFilterNotes, currentFilter } from './filter';
 
 
@@ -26,7 +26,7 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     }
 
     getChildren(element?: noteNode): Thenable<noteNode[]> {
-        if (!dataSource) {
+        if (!auditData) {
             return Promise.resolve([]);
         }
         if (!element) {
@@ -57,7 +57,7 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
                     label,
                     'root',
                     fileName,
-                    dataSource['files'][fileName].state,
+                    auditData.files[fileName].state,
                     desc,
                     true,
                     vscode.TreeItemCollapsibleState.Collapsed
@@ -139,4 +139,3 @@ class noteNode extends vscode.TreeItem {
         }
     }
 }
-

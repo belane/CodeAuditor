@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import { dataSource } from './storage';
+import { auditData } from './storage';
 import { listFilterNotes } from './filter';
 
 
 export function generateReport(out: vscode.OutputChannel) {
-    if (!dataSource) {
+    if (!auditData) {
         vscode.window.showErrorMessage("Extension not ready");
         return;
     }

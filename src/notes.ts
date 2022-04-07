@@ -1,49 +1,35 @@
 import * as vscode from 'vscode';
-import { dataSourceSave, dataSource, projectRoot } from './storage';
+import { auditDataSave, auditData, projectRoot } from './storage';
 import { updateDecorators } from './decorators';
+import { fileState, Note, noteState, noteType } from './types';
 
-
-export enum fileState {
-    Pending = 'pending',
-    Reviewed = 'reviewed',
-    Excluded = 'excluded',
-}
-export enum noteState {
-    Open  = 'open',
-    Confirmed = 'confirmed',
-    Discarded = 'discarded',
-}
-export enum noteType {
-    Note = 'note',
-    Issue = 'issue',
-}
 
 export async function newNote(line?: string) {
-    const [noteContext, ready] = getNoteContext();
-    if (!ready || !noteContext) {
+    const context = getNoteContext();
+    if (!context) {
         return;
     }
-    const selLine = line && parseInt(line)? line : noteContext["selLine"];
+    const selLine = line && parseInt(line)? parseInt(line) : context.selLine;
 
-    let fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    let fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         fileData = {
-            "lines": vscode.window.activeTextEditor?.document.lineCount,
-            "state": "pending",
-            "notes": {}
+            lines: vscode.window.activeTextEditor?.document.lineCount || 0,
+            state: fileState.Pending,
+            notes: {}
         };
     }
-    let note = fileData.notes[selLine];
+    let note: Note = fileData.notes[selLine];
     if (!note) {
         const option = await vscode.window.showQuickPick(["$(bug)  Issue", "$(output)  Note"]);
         if (!option) {
             return;
         }
-        const newType : string | undefined = option.toLowerCase().includes(noteType.Issue)? noteType.Issue : noteType.Note;
-        note = {
-            "length": noteContext["selLength"],
-            "type": newType,
-            "state": "open"
+        const newType = option.toLowerCase().includes(noteType.Issue)? noteType.Issue : noteType.Note;
+        note = { 
+            length: context.selLength,
+            type: newType,
+            state: noteState.Open
         };
     }
 
@@ -54,37 +40,37 @@ export async function newNote(line?: string) {
 
     note.message = inputBox;
     fileData.notes[selLine] = note;
-    dataSource['files'][noteContext["sourceCodeFile"]] = fileData;
-    dataSourceSave();
+    auditData.files[context.sourceCodeFile] = fileData;
+    auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
 }
 
 export function removeNote(line?: string) {
-    const [noteContext, ready] = getNoteContext();
-    if (!ready || !noteContext) {
+    const context = getNoteContext();
+    if (!context) {
         return;
     }
-    let selLine = line && parseInt(line)? line : noteContext["selLine"];
+    let selLine = line && parseInt(line)? parseInt(line) : context.selLine;
     
-    const fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
     }
-    selLine = searchNoteLine(noteContext["sourceCodeFile"], selLine);
+    selLine = searchNoteLine(context.sourceCodeFile, selLine);
     if (!fileData.notes[selLine]) {
         return;
     }
 
     delete fileData.notes[selLine];
-    dataSourceSave();
+    auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
 }
 
 export function setNoteState(state: noteState, line?: string) {
-    const [noteContext, ready] = getNoteContext();
-    if (!ready || !noteContext || !state) {
+    const context = getNoteContext();
+    if (!context || !state) {
         return;
     }
 
@@ -92,9 +78,9 @@ export function setNoteState(state: noteState, line?: string) {
         return;
     }
 
-    const selLine = line? line : noteContext["selLine"];
+    const selLine = line && parseInt(line)? parseInt(line) : context.selLine;
     
-    const fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
     }
@@ -103,24 +89,24 @@ export function setNoteState(state: noteState, line?: string) {
     }
 
     fileData.notes[selLine].state = state;
-    dataSource['files'][noteContext["sourceCodeFile"]] = fileData;
-    dataSourceSave();
+    auditData.files[context.sourceCodeFile] = fileData;
+    auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
 }
 
 export function setNoteType(line?: string, newType?: noteType) {
-    const [noteContext, ready] = getNoteContext();
-    if (!ready || !noteContext) {
+    const context = getNoteContext();
+    if (!context) {
         return;
     }
-    let selLine = line && parseInt(line)? line : noteContext["selLine"];
+    let selLine = line && parseInt(line)? parseInt(line) : context.selLine;
     
-    const fileData = dataSource['files'][noteContext["sourceCodeFile"]];
+    const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
     }
-    selLine = searchNoteLine(noteContext["sourceCodeFile"], selLine);
+    selLine = searchNoteLine(context.sourceCodeFile, selLine);
     if (!fileData.notes[selLine]) {
         return;
     }
@@ -132,37 +118,44 @@ export function setNoteType(line?: string, newType?: noteType) {
     }
     
     fileData.notes[selLine].type = newType;
-    dataSourceSave();
+    auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
 }
 
-function getNoteContext(): [any, boolean] {
-    if (!vscode.window.activeTextEditor || !dataSource) {
+type NoteContext = {
+    sourceCodeFile: string;
+    selLine: number;
+    selLength: number;
+    selStart: number;
+    selEnd: number;
+}
+
+function getNoteContext(): NoteContext | undefined {
+    if (!vscode.window.activeTextEditor || !auditData) {
         vscode.window.showErrorMessage("Extension not ready");
-        return [{}, false];
+        return;
     }
 
     const sourceCodeFile = vscode.window.activeTextEditor?.document.fileName.slice(projectRoot.length + 1);
     if (!sourceCodeFile) {
         vscode.window.showErrorMessage("File not found");
-        return [{}, false];
+        return;
     }
 
     const selection = vscode.window.activeTextEditor.selection;
-    return [
-        {
-            "sourceCodeFile": sourceCodeFile,
-            "selLine": selection.start.line + 1,
-            "selLength": selection.end.line + 1 - selection.start.line,
-            "selStart": selection.start.character,
-            "selEnd": selection.end.character
-        }, true];
+    return {
+        sourceCodeFile: sourceCodeFile,
+        selLine: selection.start.line + 1,
+        selLength: selection.end.line + 1 - selection.start.line,
+        selStart: selection.start.character,
+        selEnd: selection.end.character
+    };
 }
 
-function searchNoteLine(file: string, line: number): number {
+function searchNoteLine(sourceCodeFile: string, line: number): number {
     for (let i = line; i > 0; i--) {
-        const candidate = dataSource['files'][file].notes[i];
+        const candidate = auditData.files[sourceCodeFile].notes[i];
         if (candidate && i + candidate.length > line) {
             return i;
         }
@@ -177,22 +170,3 @@ async function promptInputBox(msg?: string) {
         ignoreFocusOut: true
     });
 }
-
-
-/*
-fileNotes =
-{
-"lines": 10,
-"state": "pending/reviewed/excluded"
-"notes":
-{
-    5:
-    {
-        "length": 2,
-        "message":"Possible issue",
-        "type":"note/issue",
-        "state": "open/confirmed/discarded"
-    }
-}
-};
-*/

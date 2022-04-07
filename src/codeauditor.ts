@@ -2,14 +2,15 @@ import * as vscode from 'vscode';
 import { triggerUpdateDecorations } from './decorators';
 import { toggleFilter } from './filter';
 import { noteProvider } from './noteexplorer';
-import { newNote, noteState, noteType, removeNote, setNoteState, setNoteType } from './notes';
+import { noteState, noteType } from './types';
+import { newNote, removeNote, setNoteState, setNoteType } from './notes';
 import { generateReport } from './report';
-import { dataSourceInit } from './storage';
+import { auditDataInit } from './storage';
 
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Loading Code Auditor');
-	dataSourceInit();
+	auditDataInit();
 
 	const noteExplorer : noteProvider = new noteProvider();
 	vscode.window.registerTreeDataProvider('code-auditor.noteExplorer', noteExplorer);
