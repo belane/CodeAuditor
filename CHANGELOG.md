@@ -4,6 +4,7 @@
 
 - Added this CHANGELOG.md.
 - Fix lint warnings.
+- Fefactor types.
 
 ## 0.2.5
 
