@@ -63,6 +63,10 @@ export function removeNote(line?: string) {
     }
 
     delete fileData.notes[selLine];
+    if (Object.keys(fileData.notes).length === 0) {
+        updateDecorators();
+        delete auditData.files[context.sourceCodeFile];
+    }
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
