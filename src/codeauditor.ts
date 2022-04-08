@@ -6,6 +6,7 @@ import { noteState, noteType } from './types';
 import { newNote, removeNote, setNoteState, setNoteType } from './notes';
 import { generateReport } from './report';
 import { auditDataInit } from './storage';
+import { ImportSemgrepReport, ImportSlitherReport } from './importnotes';
 
 
 export function activate(context: vscode.ExtensionContext) {
@@ -66,6 +67,12 @@ export function activate(context: vscode.ExtensionContext) {
 		const out = vscode.window.createOutputChannel("report");
 		generateReport(out);
 		out.show();
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSlither', () => {
+		ImportSlitherReport();
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSemgrep', () => {
+		ImportSemgrepReport();
 	}));
 
 	let activeEditor = vscode.window.activeTextEditor;

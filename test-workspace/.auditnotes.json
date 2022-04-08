@@ -1,7 +1,55 @@
 {
   "files": {
-    "Contract.sol": {
+    "smart-contract\\lib\\Owner.sol": {
+      "lines": 16,
+      "state": "pending",
+      "notes": {
+        "3": {
+          "length": 1,
+          "type": "note",
+          "state": "discarded",
+          "message": "Need it?"
+        }
+      }
+    },
+    "src\\dash.php": {
       "lines": 26,
+      "state": "pending",
+      "notes": {
+        "3": {
+          "length": 3,
+          "type": "issue",
+          "state": "confirmed",
+          "message": "Bad issue"
+        },
+        "14": {
+          "length": 1,
+          "type": "note",
+          "state": "confirmed",
+          "message": "note 1"
+        },
+        "18": {
+          "length": 3,
+          "type": "note",
+          "state": "confirmed",
+          "message": "note 2"
+        }
+      }
+    },
+    "smart-contract\\Purpose.sol": {
+      "lines": 18,
+      "state": "pending",
+      "notes": {
+        "4": {
+          "length": 3,
+          "type": "note",
+          "state": "open",
+          "message": "Review"
+        }
+      }
+    },
+    "smart-contract\\StoreContract.sol": {
+      "lines": 19,
       "state": "pending",
       "notes": {
         "1": {
@@ -10,87 +58,23 @@
           "state": "confirmed",
           "message": "Wrong pragma"
         },
-        "2": {
-          "length": 1,
-          "type": "note",
-          "state": "open",
-          "message": "review license"
-        },
         "5": {
           "length": 1,
           "type": "issue",
           "state": "confirmed",
           "message": "Some random issue"
         },
-        "10": {
+        "8": {
           "length": 1,
           "type": "note",
           "state": "confirmed",
           "message": "Sort note"
         },
-        "13": {
+        "14": {
           "length": 1,
           "type": "note",
           "state": "confirmed",
           "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        },
-        "17": {
-          "length": 1,
-          "type": "issue",
-          "state": "confirmed",
-          "message": "Regular Issue"
-        },
-        "22": {
-          "length": 3,
-          "type": "note",
-          "state": "discarded",
-          "message": "Review"
-        }
-      }
-    },
-    "src\\SubContract.sol": {
-      "lines": 26,
-      "state": "reviewed",
-      "notes": {
-        "5": {
-          "length": 3,
-          "type": "issue",
-          "state": "confirmed",
-          "message": "Bad issue"
-        },
-        "16": {
-          "length": 1,
-          "type": "note",
-          "state": "confirmed",
-          "message": "note 1"
-        },
-        "22": {
-          "length": 4,
-          "type": "note",
-          "state": "confirmed",
-          "message": "note 2"
-        }
-      }
-    },
-    ".auditnotes.json": {
-      "lines": 64,
-      "state": "pending",
-      "notes": {}
-    },
-    "src\\lib\\SubContract.sol": {
-      "lines": 16,
-      "state": "pending",
-      "notes": {}
-    },
-    "src\\lib\\lib.sol": {
-      "lines": 16,
-      "state": "pending",
-      "notes": {
-        "13": {
-          "length": 2,
-          "type": "note",
-          "state": "discarded",
-          "message": "Need it?"
         }
       }
     }

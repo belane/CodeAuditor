@@ -87,6 +87,22 @@
 				}
 			},
 			{
+				"command": "code-auditor.importSlither",
+				"title": "Audit: Import Slither",
+				"icon": {
+					"light": "resources/light/library.svg",
+					"dark": "resources/dark/library.svg"
+				}
+			},
+			{
+				"command": "code-auditor.importSemgrep",
+				"title": "Audit: Import Semgrep",
+				"icon": {
+					"light": "resources/light/library.svg",
+					"dark": "resources/dark/library.svg"
+				}
+			},
+			{
 				"command": "code-auditor.filter.notesOn",
 				"title": "Hide Notes",
 				"icon": {
@@ -189,7 +205,16 @@
 			"view/item/context": [
 				{
 					"command": "code-auditor.generateReport",
-					"when": "viewItem == code-auditor.noteExplorer.node"
+					"when": "view == code-auditor.noteExplorer"
+				},
+				{
+					"command": "code-auditor.importSlither",
+					"when": "view == code-auditor.noteExplorer"
+				}
+				,
+				{
+					"command": "code-auditor.importSemgrep",
+					"when": "view == code-auditor.noteExplorer"
 				}
 			],
 			"view/title": [
