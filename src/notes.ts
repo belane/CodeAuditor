@@ -78,12 +78,13 @@ export function setNoteState(state: noteState, line?: string) {
         return;
     }
 
-    const selLine = line && parseInt(line)? parseInt(line) : context.selLine;
+    let selLine = line && parseInt(line)? parseInt(line) : context.selLine;
     
     const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
     }
+    selLine = searchNoteLine(context.sourceCodeFile, selLine);
     if (!fileData.notes[selLine]) {
         return;
     }
