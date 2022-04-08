@@ -88,7 +88,15 @@
 			},
 			{
 				"command": "code-auditor.importSlither",
-				"title": "Audit: Import Slither report",
+				"title": "Audit: Import Slither",
+				"icon": {
+					"light": "resources/light/library.svg",
+					"dark": "resources/dark/library.svg"
+				}
+			},
+			{
+				"command": "code-auditor.importSemgrep",
+				"title": "Audit: Import Semgrep",
 				"icon": {
 					"light": "resources/light/library.svg",
 					"dark": "resources/dark/library.svg"
@@ -201,6 +209,11 @@
 				},
 				{
 					"command": "code-auditor.importSlither",
+					"when": "view == code-auditor.noteExplorer"
+				}
+				,
+				{
+					"command": "code-auditor.importSemgrep",
 					"when": "view == code-auditor.noteExplorer"
 				}
 			],

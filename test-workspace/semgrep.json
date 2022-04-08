@@ -1,0 +1,372 @@
+{
+    "errors": [],
+    "paths": {
+        "_comment": "<add --verbose for a list of skipped paths>",
+        "scanned": [
+            "semgrep-report.json",
+            "slither-report.json",
+            "smart-contract/Purpose.sol",
+            "smart-contract/StoreContract.sol",
+            "smart-contract/lib/Owner.sol",
+            "smart-contract/lib/Payments.sol",
+            "src/dash.php",
+            "src/main.ts"
+        ]
+    },
+    "results": [
+        {
+            "check_id": "contrib.nodejsscan.node_sqli_injection",
+            "end": {
+                "col": 8,
+                "line": 18,
+                "offset": 622
+            },
+            "extra": {
+                "fingerprint": "ecfbb49b4469a3d0fd0b5a4188040301",
+                "is_ignored": false,
+                "lines": "    const name = req.query.name;\n    const password = crypto.createHash('sha256').update(req.query.password).digest('base64');\n    const sql = \"select * from user where name = '\" + name + \"' and password = '\" + password + \"'\";\n\n    db.query(sql, function (err: any, result: any) {\n        return;\n    });",
+                "message": "Untrusted input concatinated with raw SQL query can result in SQL Injection.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                    "owasp": "A1: Injection",
+                    "technology": [
+                        "node.js",
+                        "express"
+                    ]
+                },
+                "metavars": {
+                    "$CON": {
+                        "abstract_content": "db",
+                        "end": {
+                            "col": 7,
+                            "line": 16,
+                            "offset": 552
+                        },
+                        "start": {
+                            "col": 5,
+                            "line": 16,
+                            "offset": 550
+                        },
+                        "unique_id": {
+                            "sid": 3,
+                            "type": "id"
+                        }
+                    },
+                    "$INP": {
+                        "abstract_content": "name",
+                        "end": {
+                            "col": 15,
+                            "line": 12,
+                            "offset": 332
+                        },
+                        "start": {
+                            "col": 11,
+                            "line": 12,
+                            "offset": 328
+                        },
+                        "unique_id": {
+                            "sid": 12,
+                            "type": "id"
+                        }
+                    },
+                    "$QUERY": {
+                        "abstract_content": "query",
+                        "end": {
+                            "col": 27,
+                            "line": 12,
+                            "offset": 344
+                        },
+                        "start": {
+                            "col": 22,
+                            "line": 12,
+                            "offset": 339
+                        },
+                        "unique_id": {
+                            "md5sum": "d7ac87f94a59ed64e1988333c0c797f3",
+                            "type": "AST"
+                        }
+                    },
+                    "$REQ": {
+                        "abstract_content": "req",
+                        "end": {
+                            "col": 21,
+                            "line": 12,
+                            "offset": 338
+                        },
+                        "start": {
+                            "col": 18,
+                            "line": 12,
+                            "offset": 335
+                        },
+                        "unique_id": {
+                            "sid": 10,
+                            "type": "id"
+                        }
+                    },
+                    "$SQL": {
+                        "abstract_content": "sql",
+                        "end": {
+                            "col": 14,
+                            "line": 14,
+                            "offset": 458
+                        },
+                        "start": {
+                            "col": 11,
+                            "line": 14,
+                            "offset": 455
+                        },
+                        "unique_id": {
+                            "sid": 14,
+                            "type": "id"
+                        }
+                    },
+                    "$VAR": {
+                        "abstract_content": "name",
+                        "end": {
+                            "col": 32,
+                            "line": 12,
+                            "offset": 349
+                        },
+                        "start": {
+                            "col": 28,
+                            "line": 12,
+                            "offset": 345
+                        },
+                        "unique_id": {
+                            "md5sum": "faab0817e0959263cb9da2aa061cbf78",
+                            "type": "AST"
+                        }
+                    }
+                },
+                "severity": "ERROR"
+            },
+            "path": "src/main.ts",
+            "start": {
+                "col": 5,
+                "line": 12,
+                "offset": 322
+            }
+        },
+        {
+            "check_id": "contrib.nodejsscan.node_sqli_injection",
+            "end": {
+                "col": 8,
+                "line": 18,
+                "offset": 622
+            },
+            "extra": {
+                "fingerprint": "d882f5b462e27293b2ebb86768ba1ea4",
+                "is_ignored": false,
+                "lines": "    const password = crypto.createHash('sha256').update(req.query.password).digest('base64');\n    const sql = \"select * from user where name = '\" + name + \"' and password = '\" + password + \"'\";\n\n    db.query(sql, function (err: any, result: any) {\n        return;\n    });",
+                "message": "Untrusted input concatinated with raw SQL query can result in SQL Injection.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                    "owasp": "A1: Injection",
+                    "technology": [
+                        "node.js",
+                        "express"
+                    ]
+                },
+                "metavars": {
+                    "$CON": {
+                        "abstract_content": "db",
+                        "end": {
+                            "col": 7,
+                            "line": 16,
+                            "offset": 552
+                        },
+                        "start": {
+                            "col": 5,
+                            "line": 16,
+                            "offset": 550
+                        },
+                        "unique_id": {
+                            "sid": 3,
+                            "type": "id"
+                        }
+                    },
+                    "$INP": {
+                        "abstract_content": "password",
+                        "end": {
+                            "col": 19,
+                            "line": 13,
+                            "offset": 369
+                        },
+                        "start": {
+                            "col": 11,
+                            "line": 13,
+                            "offset": 361
+                        },
+                        "unique_id": {
+                            "sid": 13,
+                            "type": "id"
+                        }
+                    },
+                    "$QUERY": {
+                        "abstract_content": "createHash",
+                        "end": {
+                            "col": 39,
+                            "line": 13,
+                            "offset": 389
+                        },
+                        "start": {
+                            "col": 29,
+                            "line": 13,
+                            "offset": 379
+                        },
+                        "unique_id": {
+                            "md5sum": "f1a4484635f5028b1cbf24a0e13451ad",
+                            "type": "AST"
+                        }
+                    },
+                    "$REQ": {
+                        "abstract_content": "crypto",
+                        "end": {
+                            "col": 28,
+                            "line": 13,
+                            "offset": 378
+                        },
+                        "start": {
+                            "col": 22,
+                            "line": 13,
+                            "offset": 372
+                        },
+                        "unique_id": {
+                            "md5sum": "e9effbbdc890e2c1048bfb713dadb23f",
+                            "type": "AST"
+                        }
+                    },
+                    "$SQL": {
+                        "abstract_content": "sql",
+                        "end": {
+                            "col": 14,
+                            "line": 14,
+                            "offset": 458
+                        },
+                        "start": {
+                            "col": 11,
+                            "line": 14,
+                            "offset": 455
+                        },
+                        "unique_id": {
+                            "sid": 14,
+                            "type": "id"
+                        }
+                    }
+                },
+                "severity": "ERROR"
+            },
+            "path": "src/main.ts",
+            "start": {
+                "col": 5,
+                "line": 13,
+                "offset": 355
+            }
+        },
+        {
+            "check_id": "php.lang.security.exec-use",
+            "end": {
+                "col": 69,
+                "line": 24,
+                "offset": 414
+            },
+            "extra": {
+                "fingerprint": "fa0406bcd69e15e0c3194f8c604afd9c",
+                "is_ignored": false,
+                "lines": "    return exec(\"cat /var/log/apache2/access.log | grep \" . $filter);",
+                "message": "Executing non-constant commands. This can lead to command injection.",
+                "metadata": {
+                    "category": "security",
+                    "references": [
+                        "https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/SystemExecFunctionsSniff.php"
+                    ],
+                    "technology": [
+                        "php"
+                    ]
+                },
+                "metavars": {
+                    "$FUNC": {
+                        "abstract_content": "exec",
+                        "end": {
+                            "col": 16,
+                            "line": 24,
+                            "offset": 361
+                        },
+                        "start": {
+                            "col": 12,
+                            "line": 24,
+                            "offset": 357
+                        },
+                        "unique_id": {
+                            "md5sum": "f3b32c853dd0455af3548c672a7b009d",
+                            "type": "AST"
+                        }
+                    }
+                },
+                "severity": "ERROR"
+            },
+            "path": "src/dash.php",
+            "start": {
+                "col": 5,
+                "line": 24,
+                "offset": 350
+            }
+        },
+        {
+            "check_id": "php.lang.security.injection.tainted-sql-string",
+            "end": {
+                "col": 55,
+                "line": 8,
+                "offset": 130
+            },
+            "extra": {
+                "fingerprint": "c0df26a2dc8e5f051f46509d85c85916",
+                "is_ignored": false,
+                "lines": "mysql_query(\"SELECT user FROM users WHERE id = \" . $id);",
+                "message": "User data flows into this manually-constructed SQL string. User data can be safely inserted into SQL strings using prepared statements or an object-relational mapper (ORM). Manually-constructed SQL strings is a possible indicator of SQL injection, which could let an attacker steal or manipulate data from the database. Instead, use prepared statements (`$mysqli->prepare(\"INSERT INTO test(id, label) VALUES (?, ?)\");`) or a safe library.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                    "owasp": [
+                        "A10:2021",
+                        "A01:2017"
+                    ],
+                    "references": [
+                        "https://owasp.org/www-community/attacks/SQL_Injection"
+                    ],
+                    "technology": [
+                        "php"
+                    ]
+                },
+                "metavars": {
+                    "$EXPR": {
+                        "abstract_content": "$id",
+                        "end": {
+                            "col": 55,
+                            "line": 8,
+                            "offset": 130
+                        },
+                        "start": {
+                            "col": 52,
+                            "line": 8,
+                            "offset": 127
+                        },
+                        "unique_id": {
+                            "sid": 4,
+                            "type": "id"
+                        }
+                    }
+                },
+                "severity": "ERROR"
+            },
+            "path": "src/dash.php",
+            "start": {
+                "col": 13,
+                "line": 8,
+                "offset": 88
+            }
+        }
+    ]
+}

@@ -1,0 +1,1218 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "withdrawBalance",
+            "source_mapping": {
+              "start": 300,
+              "length": 176,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Payments",
+                "source_mapping": {
+                  "start": 26,
+                  "length": 455,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdrawBalance()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "! (msg.sender.call.value(userBalance[msg.sender])())",
+            "source_mapping": {
+              "start": 347,
+              "length": 51,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                15
+              ],
+              "starting_column": 12,
+              "ending_column": 63
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdrawBalance",
+                "source_mapping": {
+                  "start": 300,
+                  "length": 176,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "Payments",
+                    "source_mapping": {
+                      "start": 26,
+                      "length": 455,
+                      "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                      "filename_relative": "smart-contract/lib/Payments.sol",
+                      "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                      "filename_short": "smart-contract/lib/Payments.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdrawBalance()"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls"
+            }
+          },
+          {
+            "type": "node",
+            "name": "userBalance[msg.sender] = 0",
+            "source_mapping": {
+              "start": 442,
+              "length": 27,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                18
+              ],
+              "starting_column": 9,
+              "ending_column": 36
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdrawBalance",
+                "source_mapping": {
+                  "start": 300,
+                  "length": 176,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "Payments",
+                    "source_mapping": {
+                      "start": 26,
+                      "length": 455,
+                      "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                      "filename_relative": "smart-contract/lib/Payments.sol",
+                      "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                      "filename_short": "smart-contract/lib/Payments.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdrawBalance()"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "variables_written",
+              "variable_name": "userBalance"
+            }
+          }
+        ],
+        "description": "Reentrancy in Payments.withdrawBalance() (smart-contract/lib/Payments.sol#14-19):\n\tExternal calls:\n\t- ! (msg.sender.call.value(userBalance[msg.sender])()) (smart-contract/lib/Payments.sol#15)\n\tState variables written after the call(s):\n\t- userBalance[msg.sender] = 0 (smart-contract/lib/Payments.sol#18)\n",
+        "markdown": "Reentrancy in [Payments.withdrawBalance()](smart-contract/lib/Payments.sol#L14-L19):\n\tExternal calls:\n\t- [! (msg.sender.call.value(userBalance[msg.sender])())](smart-contract/lib/Payments.sol#L15)\n\tState variables written after the call(s):\n\t- [userBalance[msg.sender] = 0](smart-contract/lib/Payments.sol#L18)\n",
+        "first_markdown_element": "smart-contract/lib/Payments.sol#L14-L19",
+        "id": "2ae474ceda7e7c7105d27b6e78f9c98a8dd1a8d537b301245237888994787715",
+        "check": "reentrancy-eth",
+        "impact": "High",
+        "confidence": "Medium"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": ">=0.4.0<0.5.17",
+            "source_mapping": {
+              "start": 0,
+              "length": 32,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+              "filename_relative": "smart-contract/Purpose.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+              "filename_short": "smart-contract/Purpose.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 33
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                ">=",
+                "0.4",
+                ".0",
+                "<",
+                "0.5",
+                ".17"
+              ]
+            }
+          },
+          {
+            "type": "pragma",
+            "name": "^0.4.15",
+            "source_mapping": {
+              "start": 0,
+              "length": 24,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_relative": "smart-contract/StoreContract.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_short": "smart-contract/StoreContract.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.4",
+                ".15"
+              ]
+            }
+          },
+          {
+            "type": "pragma",
+            "name": ">=0.4.0<0.5.17",
+            "source_mapping": {
+              "start": 0,
+              "length": 32,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+              "filename_relative": "smart-contract/lib/Owner.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+              "filename_short": "smart-contract/lib/Owner.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 33
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                ">=",
+                "0.4",
+                ".0",
+                "<",
+                "0.5",
+                ".17"
+              ]
+            }
+          },
+          {
+            "type": "pragma",
+            "name": "^0.4.15",
+            "source_mapping": {
+              "start": 0,
+              "length": 24,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.4",
+                ".15"
+              ]
+            }
+          }
+        ],
+        "description": "Different versions of Solidity is used:\n\t- Version used: ['>=0.4.0<0.5.17', '^0.4.15']\n\t- >=0.4.0<0.5.17 (smart-contract/Purpose.sol#1)\n\t- ^0.4.15 (smart-contract/StoreContract.sol#1)\n\t- >=0.4.0<0.5.17 (smart-contract/lib/Owner.sol#1)\n\t- ^0.4.15 (smart-contract/lib/Payments.sol#1)\n",
+        "markdown": "Different versions of Solidity is used:\n\t- Version used: ['>=0.4.0<0.5.17', '^0.4.15']\n\t- [>=0.4.0<0.5.17](smart-contract/Purpose.sol#L1)\n\t- [^0.4.15](smart-contract/StoreContract.sol#L1)\n\t- [>=0.4.0<0.5.17](smart-contract/lib/Owner.sol#L1)\n\t- [^0.4.15](smart-contract/lib/Payments.sol#L1)\n",
+        "first_markdown_element": "smart-contract/Purpose.sol#L1",
+        "id": "b107ab5996f8d324d392d9127e4db664ea9145f8284ab86c3e37e8989f8f6c0b",
+        "check": "pragma",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": ">=0.4.0<0.5.17",
+            "source_mapping": {
+              "start": 0,
+              "length": 32,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+              "filename_relative": "smart-contract/Purpose.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+              "filename_short": "smart-contract/Purpose.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 33
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                ">=",
+                "0.4",
+                ".0",
+                "<",
+                "0.5",
+                ".17"
+              ]
+            }
+          }
+        ],
+        "description": "Pragma version>=0.4.0<0.5.17 (smart-contract/Purpose.sol#1) is too complex\n",
+        "markdown": "Pragma version[>=0.4.0<0.5.17](smart-contract/Purpose.sol#L1) is too complex\n",
+        "first_markdown_element": "smart-contract/Purpose.sol#L1",
+        "id": "f1eb4264af6a9935e2d618f7dc515a3ec5896c427133cd4451f398c2d624e549",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.4.15",
+            "source_mapping": {
+              "start": 0,
+              "length": 24,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_relative": "smart-contract/StoreContract.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_short": "smart-contract/StoreContract.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.4",
+                ".15"
+              ]
+            }
+          }
+        ],
+        "description": "Pragma version^0.4.15 (smart-contract/StoreContract.sol#1) allows old versions\n",
+        "markdown": "Pragma version[^0.4.15](smart-contract/StoreContract.sol#L1) allows old versions\n",
+        "first_markdown_element": "smart-contract/StoreContract.sol#L1",
+        "id": "065ac45bdd148bff757f1e3a4c6764b3c6d1a799a41f34f06c73a273d200b98f",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": ">=0.4.0<0.5.17",
+            "source_mapping": {
+              "start": 0,
+              "length": 32,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+              "filename_relative": "smart-contract/lib/Owner.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+              "filename_short": "smart-contract/lib/Owner.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 33
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                ">=",
+                "0.4",
+                ".0",
+                "<",
+                "0.5",
+                ".17"
+              ]
+            }
+          }
+        ],
+        "description": "Pragma version>=0.4.0<0.5.17 (smart-contract/lib/Owner.sol#1) is too complex\n",
+        "markdown": "Pragma version[>=0.4.0<0.5.17](smart-contract/lib/Owner.sol#L1) is too complex\n",
+        "first_markdown_element": "smart-contract/lib/Owner.sol#L1",
+        "id": "bf72402cfdcb9c97f5bc1a2fd78873d8bfe3623fed4d0894c1bce850de050885",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "pragma",
+            "name": "^0.4.15",
+            "source_mapping": {
+              "start": 0,
+              "length": 24,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                1
+              ],
+              "starting_column": 1,
+              "ending_column": 25
+            },
+            "type_specific_fields": {
+              "directive": [
+                "solidity",
+                "^",
+                "0.4",
+                ".15"
+              ]
+            }
+          }
+        ],
+        "description": "Pragma version^0.4.15 (smart-contract/lib/Payments.sol#1) allows old versions\n",
+        "markdown": "Pragma version[^0.4.15](smart-contract/lib/Payments.sol#L1) allows old versions\n",
+        "first_markdown_element": "smart-contract/lib/Payments.sol#L1",
+        "id": "337bfe47384c63b272c1f7e53013aad1804e86df6baebea677106e51b8973b44",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [],
+        "description": "solc-0.4.26 is not recommended for deployment\n",
+        "markdown": "solc-0.4.26 is not recommended for deployment\n",
+        "first_markdown_element": "",
+        "id": "e85e93c612cb109c115ab31accf43cd25c590bd8f9b6a43b662115b987f777c3",
+        "check": "solc-version",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "withdrawBalance",
+            "source_mapping": {
+              "start": 300,
+              "length": 176,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Payments",
+                "source_mapping": {
+                  "start": 26,
+                  "length": 455,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdrawBalance()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "! (msg.sender.call.value(userBalance[msg.sender])())",
+            "source_mapping": {
+              "start": 347,
+              "length": 51,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                15
+              ],
+              "starting_column": 12,
+              "ending_column": 63
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdrawBalance",
+                "source_mapping": {
+                  "start": 300,
+                  "length": 176,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "Payments",
+                    "source_mapping": {
+                      "start": 26,
+                      "length": 455,
+                      "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                      "filename_relative": "smart-contract/lib/Payments.sol",
+                      "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                      "filename_short": "smart-contract/lib/Payments.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdrawBalance()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in Payments.withdrawBalance() (smart-contract/lib/Payments.sol#14-19):\n\t- ! (msg.sender.call.value(userBalance[msg.sender])()) (smart-contract/lib/Payments.sol#15)\n",
+        "markdown": "Low level call in [Payments.withdrawBalance()](smart-contract/lib/Payments.sol#L14-L19):\n\t- [! (msg.sender.call.value(userBalance[msg.sender])())](smart-contract/lib/Payments.sol#L15)\n",
+        "first_markdown_element": "smart-contract/lib/Payments.sol#L14-L19",
+        "id": "a62666541e0b83d9fee44ef6629047e606e8c8040062c2686ebcfa7725016033",
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "safe_add",
+            "source_mapping": {
+              "start": 292,
+              "length": 148,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_relative": "smart-contract/StoreContract.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_short": "smart-contract/StoreContract.sol",
+              "is_dependency": false,
+              "lines": [
+                14,
+                15,
+                16,
+                17
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "StoreContract",
+                "source_mapping": {
+                  "start": 106,
+                  "length": 336,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+                  "filename_relative": "smart-contract/StoreContract.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+                  "filename_short": "smart-contract/StoreContract.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "safe_add(uint256)"
+            },
+            "additional_fields": {
+              "target": "function",
+              "convention": "mixedCase"
+            }
+          }
+        ],
+        "description": "Function StoreContract.safe_add(uint256) (smart-contract/StoreContract.sol#14-17) is not in mixedCase\n",
+        "markdown": "Function [StoreContract.safe_add(uint256)](smart-contract/StoreContract.sol#L14-L17) is not in mixedCase\n",
+        "first_markdown_element": "smart-contract/StoreContract.sol#L14-L17",
+        "id": "18835ea3ac0ebaae77509b385ed43d9ff3d95d04798062fe211215b377a74313",
+        "check": "naming-convention",
+        "impact": "Informational",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "setPurpose",
+            "source_mapping": {
+              "start": 264,
+              "length": 169,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+              "filename_relative": "smart-contract/Purpose.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+              "filename_short": "smart-contract/Purpose.sol",
+              "is_dependency": false,
+              "lines": [
+                13,
+                14,
+                15,
+                16,
+                17
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Purpose",
+                "source_mapping": {
+                  "start": 35,
+                  "length": 400,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+                  "filename_relative": "smart-contract/Purpose.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/Purpose.sol",
+                  "filename_short": "smart-contract/Purpose.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "setPurpose(string)"
+            }
+          }
+        ],
+        "description": "setPurpose(string) should be declared external:\n\t- Purpose.setPurpose(string) (smart-contract/Purpose.sol#13-17)\n",
+        "markdown": "setPurpose(string) should be declared external:\n\t- [Purpose.setPurpose(string)](smart-contract/Purpose.sol#L13-L17)\n",
+        "first_markdown_element": "smart-contract/Purpose.sol#L13-L17",
+        "id": "0cb518516d7aa180d85b10deb81f496a9ab886913f1995197b300c83e4c4cee6",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "add",
+            "source_mapping": {
+              "start": 200,
+              "length": 86,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_relative": "smart-contract/StoreContract.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_short": "smart-contract/StoreContract.sol",
+              "is_dependency": false,
+              "lines": [
+                10,
+                11,
+                12
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "StoreContract",
+                "source_mapping": {
+                  "start": 106,
+                  "length": 336,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+                  "filename_relative": "smart-contract/StoreContract.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+                  "filename_short": "smart-contract/StoreContract.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "add(uint256)"
+            }
+          }
+        ],
+        "description": "add(uint256) should be declared external:\n\t- StoreContract.add(uint256) (smart-contract/StoreContract.sol#10-12)\n",
+        "markdown": "add(uint256) should be declared external:\n\t- [StoreContract.add(uint256)](smart-contract/StoreContract.sol#L10-L12)\n",
+        "first_markdown_element": "smart-contract/StoreContract.sol#L10-L12",
+        "id": "fb7dee660699a130aeb7047b865f9d51cd4f063f85e8772f4a8cdbcbb8f7b44d",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "safe_add",
+            "source_mapping": {
+              "start": 292,
+              "length": 148,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_relative": "smart-contract/StoreContract.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+              "filename_short": "smart-contract/StoreContract.sol",
+              "is_dependency": false,
+              "lines": [
+                14,
+                15,
+                16,
+                17
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "StoreContract",
+                "source_mapping": {
+                  "start": 106,
+                  "length": 336,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+                  "filename_relative": "smart-contract/StoreContract.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/StoreContract.sol",
+                  "filename_short": "smart-contract/StoreContract.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "safe_add(uint256)"
+            }
+          }
+        ],
+        "description": "safe_add(uint256) should be declared external:\n\t- StoreContract.safe_add(uint256) (smart-contract/StoreContract.sol#14-17)\n",
+        "markdown": "safe_add(uint256) should be declared external:\n\t- [StoreContract.safe_add(uint256)](smart-contract/StoreContract.sol#L14-L17)\n",
+        "first_markdown_element": "smart-contract/StoreContract.sol#L14-L17",
+        "id": "c3a5df51ec188f1e8dd4cfd3f42f0105874b5a11d915b5b085c6afd8c292e1e9",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "fallback",
+            "source_mapping": {
+              "start": 152,
+              "length": 28,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+              "filename_relative": "smart-contract/lib/Owner.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+              "filename_short": "smart-contract/lib/Owner.sol",
+              "is_dependency": false,
+              "lines": [
+                10
+              ],
+              "starting_column": 5,
+              "ending_column": 33
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Owner",
+                "source_mapping": {
+                  "start": 34,
+                  "length": 148,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+                  "filename_relative": "smart-contract/lib/Owner.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Owner.sol",
+                  "filename_short": "smart-contract/lib/Owner.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "fallback()"
+            }
+          }
+        ],
+        "description": "fallback() should be declared external:\n\t- Owner.fallback() (smart-contract/lib/Owner.sol#10)\n",
+        "markdown": "fallback() should be declared external:\n\t- [Owner.fallback()](smart-contract/lib/Owner.sol#L10)\n",
+        "first_markdown_element": "smart-contract/lib/Owner.sol#L10",
+        "id": "c7fe54bf72e6458d28c3c61f05f32d21ac0c00a1939d0a1606b9399910a7d53e",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "getBalance",
+            "source_mapping": {
+              "start": 94,
+              "length": 99,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                6,
+                7,
+                8
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Payments",
+                "source_mapping": {
+                  "start": 26,
+                  "length": 455,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "getBalance(address)"
+            }
+          }
+        ],
+        "description": "getBalance(address) should be declared external:\n\t- Payments.getBalance(address) (smart-contract/lib/Payments.sol#6-8)\n",
+        "markdown": "getBalance(address) should be declared external:\n\t- [Payments.getBalance(address)](smart-contract/lib/Payments.sol#L6-L8)\n",
+        "first_markdown_element": "smart-contract/lib/Payments.sol#L6-L8",
+        "id": "a8c06b45828d92d1bd49b62ae8523e24d51d6bb6dd67b2316461b1ba107d433f",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "addToBalance",
+            "source_mapping": {
+              "start": 199,
+              "length": 92,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                10,
+                11,
+                12
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Payments",
+                "source_mapping": {
+                  "start": 26,
+                  "length": 455,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "addToBalance()"
+            }
+          }
+        ],
+        "description": "addToBalance() should be declared external:\n\t- Payments.addToBalance() (smart-contract/lib/Payments.sol#10-12)\n",
+        "markdown": "addToBalance() should be declared external:\n\t- [Payments.addToBalance()](smart-contract/lib/Payments.sol#L10-L12)\n",
+        "first_markdown_element": "smart-contract/lib/Payments.sol#L10-L12",
+        "id": "c8f8042dc0ccad7262c268d7cf74c9c5b30576ef43ff69bc7621a8b69d1e0786",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "withdrawBalance",
+            "source_mapping": {
+              "start": 300,
+              "length": 176,
+              "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_relative": "smart-contract/lib/Payments.sol",
+              "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+              "filename_short": "smart-contract/lib/Payments.sol",
+              "is_dependency": false,
+              "lines": [
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "Payments",
+                "source_mapping": {
+                  "start": 26,
+                  "length": 455,
+                  "filename_used": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_relative": "smart-contract/lib/Payments.sol",
+                  "filename_absolute": "/dev/CodeAuditor/test-workspace/smart-contract/lib/Payments.sol",
+                  "filename_short": "smart-contract/lib/Payments.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdrawBalance()"
+            }
+          }
+        ],
+        "description": "withdrawBalance() should be declared external:\n\t- Payments.withdrawBalance() (smart-contract/lib/Payments.sol#14-19)\n",
+        "markdown": "withdrawBalance() should be declared external:\n\t- [Payments.withdrawBalance()](smart-contract/lib/Payments.sol#L14-L19)\n",
+        "first_markdown_element": "smart-contract/lib/Payments.sol#L14-L19",
+        "id": "ad2f5885cc442422300fd6d12b7cf0d6f0db8879fbcbd62e68cf740803e31148",
+        "check": "external-function",
+        "impact": "Optimization",
+        "confidence": "High"
+      }
+    ]
+  }
+}
