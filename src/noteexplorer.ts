@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { existsSync } from 'fs';
 import { auditData, projectRoot } from './storage';
 import { noteType } from './types';
 import { listFilterNotes, currentFilter } from './filter';
@@ -92,6 +93,10 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     private showNote(filePath: string, line: string): void {
         const focusLine = parseInt(line) - 1;
         const fullPath = path.join(projectRoot, filePath);
+        if (!existsSync(fullPath)) {
+            vscode.window.showErrorMessage("File not found");
+            return;
+        }
         vscode.workspace.openTextDocument(vscode.Uri.file(fullPath)).then(
             document => {
                 vscode.window.showTextDocument(document).then(
