@@ -1,8 +1,13 @@
 # Change Log
 
-## 0.2.6 - wip
+## 0.2.7
 
-- Added this CHANGELOG.md.
+- Option to import issues from static analysis reports (Semgrep & Slither). 🎉
+- Bugfixes.
+
+## 0.2.6
+
+- Created this CHANGELOG.md.
 - Fix lint warnings.
 - Fefactor types.
 
