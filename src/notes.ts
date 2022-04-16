@@ -2,14 +2,14 @@ import * as vscode from 'vscode';
 import { auditDataSave, auditData, projectRoot } from './storage';
 import { updateDecorators } from './decorators';
 import { fileState, Note, noteState, noteType } from './types';
-
+import * as path from 'path';
 
 export async function newNote(line?: string) {
     const context = getNoteContext();
     if (!context) {
         return;
     }
-    const selLine = line && parseInt(line)? parseInt(line) : context.selLine;
+    const selLine = line && parseInt(line) ? parseInt(line) : context.selLine;
 
     let fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
@@ -18,15 +18,18 @@ export async function newNote(line?: string) {
             state: fileState.Pending,
             notes: {}
         };
+    } else if (fileData.lines == 0) {
+        fileData.lines = vscode.window.activeTextEditor?.document.lineCount || 0;
     }
+
     let note: Note = fileData.notes[selLine];
     if (!note) {
         const option = await vscode.window.showQuickPick(["$(bug)  Issue", "$(output)  Note"]);
         if (!option) {
             return;
         }
-        const newType = option.toLowerCase().includes(noteType.Issue)? noteType.Issue : noteType.Note;
-        note = { 
+        const newType = option.toLowerCase().includes(noteType.Issue) ? noteType.Issue : noteType.Note;
+        note = {
             length: context.selLength,
             type: newType,
             state: noteState.Open
@@ -44,6 +47,7 @@ export async function newNote(line?: string) {
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
 
 export function removeNote(line?: string) {
@@ -51,8 +55,8 @@ export function removeNote(line?: string) {
     if (!context) {
         return;
     }
-    let selLine = line && parseInt(line)? parseInt(line) : context.selLine;
-    
+    let selLine = line && parseInt(line) ? parseInt(line) : context.selLine;
+
     const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
@@ -63,13 +67,14 @@ export function removeNote(line?: string) {
     }
 
     delete fileData.notes[selLine];
-    if (Object.keys(fileData.notes).length === 0) {
+    if (fileData.state == fileState.Pending && Object.keys(fileData.notes).length === 0) {
         updateDecorators();
         delete auditData.files[context.sourceCodeFile];
     }
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
 
 export function setNoteState(state: noteState, line?: string) {
@@ -82,8 +87,8 @@ export function setNoteState(state: noteState, line?: string) {
         return;
     }
 
-    let selLine = line && parseInt(line)? parseInt(line) : context.selLine;
-    
+    let selLine = line && parseInt(line) ? parseInt(line) : context.selLine;
+
     const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
@@ -98,6 +103,7 @@ export function setNoteState(state: noteState, line?: string) {
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
 
 export function setNoteType(line?: string, newType?: noteType) {
@@ -105,8 +111,8 @@ export function setNoteType(line?: string, newType?: noteType) {
     if (!context) {
         return;
     }
-    let selLine = line && parseInt(line)? parseInt(line) : context.selLine;
-    
+    let selLine = line && parseInt(line) ? parseInt(line) : context.selLine;
+
     const fileData = auditData.files[context.sourceCodeFile];
     if (!fileData) {
         return;
@@ -117,15 +123,55 @@ export function setNoteType(line?: string, newType?: noteType) {
     }
 
     if (newType && !Object.values(noteType).includes(newType)) {
-            return;
+        return;
     } else {
-        newType = fileData.notes[selLine].type == noteType.Note? noteType.Issue: noteType.Note;
+        newType = fileData.notes[selLine].type == noteType.Note ? noteType.Issue : noteType.Note;
     }
-    
+
     fileData.notes[selLine].type = newType;
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
+}
+
+export function setFileState(state: fileState, file?: vscode.Uri) {
+    const context = getNoteContext();
+    if (!context || !state) {
+        return;
+    }
+
+    if (!Object.values(fileState).includes(state)) {
+        return;
+    }
+
+    const sourceCodeFile = file ? file.fsPath.slice(projectRoot.length + 1) : context.sourceCodeFile;
+    let fileData = auditData.files[sourceCodeFile];
+    if (!fileData) {
+        fileData = { lines: 0, state: state, notes: {} };
+    } else {
+        fileData.state = state;
+    }
+
+    if (fileData.state == fileState.Pending && Object.keys(fileData.notes).length === 0) {
+        delete auditData.files[sourceCodeFile];
+    } else {
+        auditData.files[sourceCodeFile] = fileData;
+    }
+
+    auditDataSave();
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+}
+
+export async function excludePath(str_path: vscode.Uri) {
+    const exclusion = path.basename(str_path.fsPath);
+    const accept = await vscode.window.showInformationMessage(`Add '${exclusion}' to exclusion list?`, { modal: true }, "Yes");
+    if (!accept) { return; }
+
+    auditData.exclude.push(exclusion);
+    auditDataSave();
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
 
 type NoteContext = {

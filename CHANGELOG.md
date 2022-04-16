@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.2.8
+
+- Added an explorer to track the progress of the audit.
+- Possibility to mark files as reviewed.
+- Functionality to exclude files and folders from the audit.
+
 ## 0.2.7
 
 - Option to import issues from static analysis reports (Semgrep & Slither). 🎉

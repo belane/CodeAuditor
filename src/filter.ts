@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { auditData } from './storage';
+import { auditData, CodeAuditorFile } from './storage';
 import { noteType, noteState, NoteCollection, FileCollection } from './types';
 
 
@@ -12,7 +12,8 @@ export const currentFilter: filerOptions = {
     issue: true,
     open: true,
     confirmed: true,
-    discarded: false
+    discarded: false,
+    reviewed: false
 };
 
 export function toggleFilter(filter: string) {
@@ -20,7 +21,11 @@ export function toggleFilter(filter: string) {
         currentFilter[filter] = !currentFilter[filter];
     }
     vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + filter, currentFilter[filter]);
-    vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    if (filter == "reviewed") {
+        vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
+    } else {
+        vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    }
 }
 
 export function listFilterNotes(): FileCollection {
@@ -62,4 +67,41 @@ export function listFilterNotes(): FileCollection {
         };
     }
     return nodes;
+}
+
+function patternCompare(text: string, pattern: string): boolean {
+    const split = pattern.split('*');
+    const cgroups = split.filter(i => i);
+
+    if (split.length == 2 && cgroups.length == 1) {
+        return pattern[0] == '*' ? text.endsWith(cgroups[0]) : text.startsWith(cgroups[0]);
+    }
+
+    let index_pointer = 0;
+    for (const cgroup of cgroups) {
+        const index = text.indexOf(cgroup, index_pointer);
+        if (index === -1) { return false; }
+        else { index_pointer = index; }
+    }
+    return true;
+}
+
+export function isPathExcluded(str_path: string): boolean {
+    if (str_path == CodeAuditorFile) {
+        return true;
+    }
+    if (!auditData.exclude || Object.keys(auditData.exclude).length === 0) {
+        return false;
+    }
+    for (const exclusion of auditData.exclude) {
+        if (str_path == exclusion) {
+            return true;
+        }
+        if (exclusion.includes('*')) {
+            if (patternCompare(str_path, exclusion)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

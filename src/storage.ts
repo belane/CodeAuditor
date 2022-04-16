@@ -4,7 +4,7 @@ import { join } from 'path';
 import  { CodeAuditorData } from './types';
 
 
-const notesFile = '.auditnotes.json';
+export const CodeAuditorFile = '.auditnotes.json';
 let auditFile: string;
 
 export let auditData: CodeAuditorData;
@@ -15,16 +15,16 @@ export function auditDataInit() {
         return;
     }
     projectRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
-    auditFile = join(projectRoot, notesFile);
+    auditFile = join(projectRoot, CodeAuditorFile);
 
     if (existsSync(auditFile)) {
         const fileContent = readFileSync(auditFile);
         try { auditData = JSON.parse(fileContent.toString('utf8')); }
-        catch (err) { vscode.window.showErrorMessage(`Fail to process ${notesFile}`); }
+        catch (err) { vscode.window.showErrorMessage(`Fail to process ${CodeAuditorFile}`); }
     }
     if (!auditData) {
         auditData = {
-            exclude: [notesFile, '.git', '.vscode', 'node_modules'],
+            exclude: ['.git', '.vscode', 'node_modules'],
             files: {}
         };
     }
@@ -32,7 +32,7 @@ export function auditDataInit() {
         auditData.files = {};
     }
     if (!auditData.exclude) {
-        auditData.exclude = [notesFile, '.git', '.vscode', 'node_modules'];
+        auditData.exclude = ['.git', '.vscode', 'node_modules'];
     }
 }
 

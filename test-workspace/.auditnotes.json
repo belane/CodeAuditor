@@ -14,7 +14,7 @@
     },
     "src\\dash.php": {
       "lines": 26,
-      "state": "pending",
+      "state": "reviewed",
       "notes": {
         "3": {
           "length": 3,
@@ -38,7 +38,7 @@
     },
     "smart-contract\\Purpose.sol": {
       "lines": 18,
-      "state": "pending",
+      "state": "reviewed",
       "notes": {
         "4": {
           "length": 3,
@@ -80,9 +80,9 @@
     }
   },
   "exclude": [
-    ".auditnotes.json",
     ".git",
     ".vscode",
-    "node_modules"
+    "node_modules",
+    "*.json"
   ]
 }

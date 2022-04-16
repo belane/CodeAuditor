@@ -127,6 +127,7 @@ export async function ImportSlitherReport() {
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
     vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFile}`);
 }
 
@@ -213,5 +214,6 @@ export async function ImportSemgrepReport() {
     auditDataSave();
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
+    vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
     vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFile}`);
 }

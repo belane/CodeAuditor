@@ -2,13 +2,13 @@
 	"name": "code-auditor",
 	"displayName": "CodeAuditor",
 	"description": "Code Auditor Notebook",
-	"version": "0.2.7",
+	"version": "0.2.8",
 	"publisher": "red4sec",
 	"icon": "resources/code-auditor.png",
 	"readme": "README.md",
 	"author": {
-        "name": "Red4Sec Cybersecurity"
-    },
+		"name": "Red4Sec Cybersecurity"
+	},
 	"license": "Apache",
 	"homepage": "https://github.com/Red4Sec/CodeAuditor",
 	"repository": {
@@ -16,24 +16,24 @@
 		"url": "https://github.com/Red4Sec/CodeAuditor.git"
 	},
 	"bugs": {
-        "url": "https://github.com/Red4Sec/CodeAuditor/issues"
-    },
+		"url": "https://github.com/Red4Sec/CodeAuditor/issues"
+	},
 	"engines": {
 		"vscode": "^1.34.0"
 	},
 	"keywords": [
-        "audit",
-        "code audit",
+		"audit",
+		"code audit",
 		"audit-tag",
-        "tag",
-        "mark",
-        "selection",
+		"tag",
+		"mark",
+		"selection",
 		"check",
-        "highlight"
-    ],
-    "categories": [
+		"highlight"
+	],
+	"categories": [
 		"Notebooks",
-        "Programming Languages",
+		"Programming Languages",
 		"Other"
 	],
 	"activationEvents": [
@@ -183,6 +183,46 @@
 					"light": "resources/dark/circle-slash.svg",
 					"dark": "resources/light/circle-slash.svg"
 				}
+			},
+			{
+				"command": "code-auditor.fileStateReview",
+				"title": "Mark as reviewed",
+				"icon": {
+					"light": "resources/light/check.svg",
+					"dark": "resources/dark/check.svg"
+				}
+			},
+			{
+				"command": "code-auditor.fileStateReOpen",
+				"title": "Reopen",
+				"icon": {
+					"light": "resources/light/discard.svg",
+					"dark": "resources/dark/discard.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.progressOn",
+				"title": "Show All",
+				"icon": {
+					"light": "resources/dark/filter.svg",
+					"dark": "resources/light/filter.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.progressOff",
+				"title": "Hide Reviewed",
+				"icon": {
+					"light": "resources/light/filter.svg",
+					"dark": "resources/dark/filter.svg"
+				}
+			},
+			{
+				"command": "code-auditor.excludePath",
+				"title": "Exclude path",
+				"icon": {
+					"light": "resources/light/close.svg",
+					"dark": "resources/dark/close.svg"
+				}
 			}
 		],
 		"menus": {
@@ -212,11 +252,24 @@
 				{
 					"command": "code-auditor.importSlither",
 					"when": "view == code-auditor.noteExplorer"
-				}
-				,
+				},
 				{
 					"command": "code-auditor.importSemgrep",
 					"when": "view == code-auditor.noteExplorer"
+				},
+				{
+					"command": "code-auditor.fileStateReview",
+					"when": "view == code-auditor.progressExplorer && viewItem == pending",
+					"group": "inline"
+				},
+				{
+					"command": "code-auditor.fileStateReOpen",
+					"when": "view == code-auditor.progressExplorer && viewItem == reviewed",
+					"group": "inline"
+				},
+				{
+					"command": "code-auditor.excludePath",
+					"when": "view == code-auditor.progressExplorer"
 				}
 			],
 			"view/title": [
@@ -269,6 +322,16 @@
 					"command": "code-auditor.filter.discardedOff",
 					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.discarded",
 					"group": "navigation@3"
+				},
+				{
+					"command": "code-auditor.filter.progressOn",
+					"when": "view == code-auditor.progressExplorer && code-auditor.filter.reviewed",
+					"group": "navigation"
+				},
+				{
+					"command": "code-auditor.filter.progressOff",
+					"when": "view == code-auditor.progressExplorer && !code-auditor.filter.reviewed",
+					"group": "navigation"
 				}
 			],
 			"commandPalette": [
@@ -319,6 +382,18 @@
 				{
 					"command": "code-auditor.toggleType",
 					"when": "false"
+				},
+				{
+					"command": "code-auditor.fileStateReview",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.fileStateReOpen",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.progressOn",
+					"when": "false"
 				}
 			]
 		},
@@ -328,6 +403,12 @@
 					"id": "code-auditor.noteExplorer",
 					"name": "Audit Notes",
 					"contextualTitle": "Code Auditor Note Explorer",
+					"icon": "resources/dark/list-tree.svg"
+				},
+				{
+					"id": "code-auditor.progressExplorer",
+					"name": "Audit Progress",
+					"contextualTitle": "Audit progress Explorer",
 					"icon": "resources/dark/list-tree.svg"
 				}
 			]
