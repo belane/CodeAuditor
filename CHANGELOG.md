@@ -6,6 +6,7 @@
 - Possibility to mark files as reviewed.
 - Functionality to exclude files and folders from the audit.
 - Cleaning of icons to reduce the size of the extension.
+- Fix: update minimist package.
 
 ## 0.2.7
 
