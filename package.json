@@ -99,7 +99,7 @@
 			},
 			{
 				"command": "code-auditor.excludePath",
-				"title": "Exclude path",
+				"title": "Audit: Add as exclusion",
 				"icon": {
 					"light": "resources/light/close.svg",
 					"dark": "resources/dark/close.svg"

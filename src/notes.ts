@@ -165,13 +165,22 @@ export function setFileState(state: fileState, file?: vscode.Uri) {
 }
 
 export async function excludePath(str_path: vscode.Uri) {
-    const exclusion = path.basename(str_path.fsPath);
-    const accept = await vscode.window.showInformationMessage(`Add '${exclusion}' to exclusion list?`, { modal: true }, "Yes");
+    let exclusion = path.basename(str_path.fsPath);
+    const options: vscode.MessageOptions = {
+        modal: true
+    };
+    const accept = await vscode.window.showInformationMessage(`Add '${exclusion}' to exclusion list?`, options, "Add", "Customize");
     if (!accept) { return; }
+    if (accept == "Customize") {
+        const inputBox = await promptInputBox(exclusion);
+        if (!inputBox) { return; }
+        exclusion = inputBox.trim();
+    }
 
     auditData.exclude.push(exclusion);
     auditDataSave();
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
+    vscode.window.showInformationMessage(`Added exclusion: "${exclusion}"`);
 }
 
 type NoteContext = {
