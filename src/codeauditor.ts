@@ -14,18 +14,53 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Loading Code Auditor');
 	auditDataInit();
 
+	/** Explorer Views */
 	const noteExplorer : noteProvider = new noteProvider();
 	vscode.window.registerTreeDataProvider('code-auditor.noteExplorer', noteExplorer);
 
 	const progressExplorer : progressProvider = new progressProvider();
 	vscode.window.registerTreeDataProvider('code-auditor.progressExplorer', progressExplorer);
 
+	/** Commands */
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.newNote', (line : string) => {
 		newNote(line);
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.removeNote', (line : string) => {
 		removeNote(line);
 	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.reopenNote', () => {
+		setNoteState(noteState.Open);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.toggleType', () => {
+		setNoteType();
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.setNoteState', (args : string) => {
+		if (!args) { return; }
+		const [state, line] = args.split('-');
+		setNoteState(<any>state, line);
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.fileStateReview', (item) => {
+		if (item) { setFileState(fileState.Reviewed, item.uri); }
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.fileStateReOpen', (item) => {
+		if (item) { setFileState(fileState.Pending, item.uri); }
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.excludePath', (item) => {
+		if (item) { excludePath(item.uri); }
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.generateReport', () => {
+		const out = vscode.window.createOutputChannel("report");
+		generateReport(out);
+		out.show();
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSlither', () => {
+		ImportSlitherReport();
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSemgrep', () => {
+		ImportSemgrepReport();
+	}));
+
+	/** Filters */
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.notesOn', () => {
 		toggleFilter(noteType.Note);
 	}));
@@ -61,37 +96,6 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.progressOff', () => {
 		toggleFilter(fileState.Reviewed);
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.setNoteState', (args : string) => {
-		if (!args) { return; }
-		const [state, line] = args.split('-');
-		setNoteState(<any>state, line);
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.reopenNote', () => {
-		setNoteState(noteState.Open);
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.fileStateReview', (item) => {
-		if (item) { setFileState(fileState.Reviewed, item.uri); }
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.fileStateReOpen', (item) => {
-		if (item) { setFileState(fileState.Pending, item.uri); }
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.excludePath', (item) => {
-		if (item) { excludePath(item.uri); }
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.toggleType', () => {
-		setNoteType();
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.generateReport', () => {
-		const out = vscode.window.createOutputChannel("report");
-		generateReport(out);
-		out.show();
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSlither', () => {
-		ImportSlitherReport();
-	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSemgrep', () => {
-		ImportSemgrepReport();
 	}));
 
 	let activeEditor = vscode.window.activeTextEditor;

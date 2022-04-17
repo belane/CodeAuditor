@@ -1,7 +1,6 @@
 export enum fileState {
     Pending = 'pending',
     Reviewed = 'reviewed',
-    Excluded = 'excluded',
 }
 
 export enum noteState {

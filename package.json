@@ -43,7 +43,8 @@
 		"onCommand:code-auditor.setNoteState",
 		"onCommand:code-auditor.importSlither",
 		"onCommand:code-auditor.importSemgrep",
-		"onView:code-auditor.noteExplorer"
+		"onView:code-auditor.noteExplorer",
+		"onView:code-auditor.progressExplorer"
 	],
 	"main": "./dist/codeauditor.js",
 	"contributes": {
@@ -78,6 +79,30 @@
 				"icon": {
 					"light": "resources/light/word-wrap.svg",
 					"dark": "resources/dark/word-wrap.svg"
+				}
+			},
+			{
+				"command": "code-auditor.fileStateReview",
+				"title": "Mark as reviewed",
+				"icon": {
+					"light": "resources/light/check.svg",
+					"dark": "resources/dark/check.svg"
+				}
+			},
+			{
+				"command": "code-auditor.fileStateReOpen",
+				"title": "Reopen",
+				"icon": {
+					"light": "resources/light/discard.svg",
+					"dark": "resources/dark/discard.svg"
+				}
+			},
+			{
+				"command": "code-auditor.excludePath",
+				"title": "Exclude path",
+				"icon": {
+					"light": "resources/light/close.svg",
+					"dark": "resources/dark/close.svg"
 				}
 			},
 			{
@@ -185,22 +210,6 @@
 				}
 			},
 			{
-				"command": "code-auditor.fileStateReview",
-				"title": "Mark as reviewed",
-				"icon": {
-					"light": "resources/light/check.svg",
-					"dark": "resources/dark/check.svg"
-				}
-			},
-			{
-				"command": "code-auditor.fileStateReOpen",
-				"title": "Reopen",
-				"icon": {
-					"light": "resources/light/discard.svg",
-					"dark": "resources/dark/discard.svg"
-				}
-			},
-			{
 				"command": "code-auditor.filter.progressOn",
 				"title": "Show All",
 				"icon": {
@@ -214,14 +223,6 @@
 				"icon": {
 					"light": "resources/light/filter.svg",
 					"dark": "resources/dark/filter.svg"
-				}
-			},
-			{
-				"command": "code-auditor.excludePath",
-				"title": "Exclude path",
-				"icon": {
-					"light": "resources/light/close.svg",
-					"dark": "resources/dark/close.svg"
 				}
 			}
 		],
@@ -246,18 +247,6 @@
 			],
 			"view/item/context": [
 				{
-					"command": "code-auditor.generateReport",
-					"when": "view == code-auditor.noteExplorer"
-				},
-				{
-					"command": "code-auditor.importSlither",
-					"when": "view == code-auditor.noteExplorer"
-				},
-				{
-					"command": "code-auditor.importSemgrep",
-					"when": "view == code-auditor.noteExplorer"
-				},
-				{
 					"command": "code-auditor.fileStateReview",
 					"when": "view == code-auditor.progressExplorer && viewItem == pending",
 					"group": "inline"
@@ -270,19 +259,22 @@
 				{
 					"command": "code-auditor.excludePath",
 					"when": "view == code-auditor.progressExplorer"
+				},
+				{
+					"command": "code-auditor.generateReport",
+					"when": "view == code-auditor.noteExplorer"
+				},
+				{
+					"command": "code-auditor.importSlither",
+					"when": "view == code-auditor.noteExplorer"
+				},
+				{
+					"command": "code-auditor.importSemgrep",
+					"when": "view == code-auditor.noteExplorer"
 				}
+
 			],
 			"view/title": [
-				{
-					"command": "code-auditor.filter.notesOn",
-					"when": "view == code-auditor.noteExplorer && code-auditor.filter.note",
-					"group": "navigation@1"
-				},
-				{
-					"command": "code-auditor.filter.notesOff",
-					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.note",
-					"group": "navigation@1"
-				},
 				{
 					"command": "code-auditor.filter.issueOn",
 					"when": "view == code-auditor.noteExplorer && code-auditor.filter.issue",
@@ -294,14 +286,14 @@
 					"group": "navigation@0"
 				},
 				{
-					"command": "code-auditor.filter.openOn",
-					"when": "view == code-auditor.noteExplorer && code-auditor.filter.open",
-					"group": "navigation@4"
+					"command": "code-auditor.filter.notesOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.note",
+					"group": "navigation@1"
 				},
 				{
-					"command": "code-auditor.filter.openOff",
-					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.open",
-					"group": "navigation@4"
+					"command": "code-auditor.filter.notesOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.note",
+					"group": "navigation@1"
 				},
 				{
 					"command": "code-auditor.filter.confirmedOn",
@@ -324,17 +316,47 @@
 					"group": "navigation@3"
 				},
 				{
+					"command": "code-auditor.filter.openOn",
+					"when": "view == code-auditor.noteExplorer && code-auditor.filter.open",
+					"group": "navigation@4"
+				},
+				{
+					"command": "code-auditor.filter.openOff",
+					"when": "view == code-auditor.noteExplorer && !code-auditor.filter.open",
+					"group": "navigation@4"
+				},
+				{
 					"command": "code-auditor.filter.progressOn",
 					"when": "view == code-auditor.progressExplorer && code-auditor.filter.reviewed",
-					"group": "navigation"
+					"group": "navigation@0"
 				},
 				{
 					"command": "code-auditor.filter.progressOff",
 					"when": "view == code-auditor.progressExplorer && !code-auditor.filter.reviewed",
-					"group": "navigation"
+					"group": "navigation@0"
 				}
 			],
 			"commandPalette": [
+				{
+					"command": "code-auditor.reopenNote",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.toggleType",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.fileStateReview",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.fileStateReOpen",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.excludePath",
+					"when": "false"
+				},
 				{
 					"command": "code-auditor.filter.notesOn",
 					"when": "false"
@@ -376,23 +398,11 @@
 					"when": "false"
 				},
 				{
-					"command": "code-auditor.reopenNote",
-					"when": "false"
-				},
-				{
-					"command": "code-auditor.toggleType",
-					"when": "false"
-				},
-				{
-					"command": "code-auditor.fileStateReview",
-					"when": "false"
-				},
-				{
-					"command": "code-auditor.fileStateReOpen",
-					"when": "false"
-				},
-				{
 					"command": "code-auditor.filter.progressOn",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.progressOff",
 					"when": "false"
 				}
 			]

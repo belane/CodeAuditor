@@ -30,7 +30,6 @@ export class progressProvider implements vscode.TreeDataProvider<Entry> {
 		if (element.type === vscode.FileType.File) {
 			treeItem.command = { command: 'code-auditor.openFile', title: "Open File", arguments: [element.uri], };
 			treeItem.contextValue = element.state;
-			treeItem.description = element.num_issues.toString();
 			treeItem.tooltip = `${element.num_issues.toString()} issues`;
 
 			if (element.state == fileState.Reviewed) {
