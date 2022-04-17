@@ -5,6 +5,7 @@
 - Added an explorer to track the progress of the audit.
 - Possibility to mark files as reviewed.
 - Functionality to exclude files and folders from the audit.
+- Cleaning of icons to reduce the size of the extension.
 
 ## 0.2.7
 
