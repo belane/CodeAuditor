@@ -100,7 +100,7 @@ export class progressProvider implements vscode.TreeDataProvider<Entry> {
 			}
 
 			const stat = fs.statSync(fullPath);
-			if (currentFilter.reviewed && stat.isDirectory()) {
+			if (stat.isDirectory()) {
 				const known_children = await this.readDirectory(fullPath, false);
 				if (Object.keys(known_children).length === 0) {
 					continue;
