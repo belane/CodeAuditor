@@ -135,9 +135,9 @@ export function setNoteType(line?: string, newType?: noteType) {
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
 
-export function setFileState(state: fileState, file?: vscode.Uri) {
-    const context = getNoteContext();
-    if (!context || !state) {
+export function setFileState(state: fileState, file: vscode.Uri) {
+    if (!auditData) {
+        vscode.window.showErrorMessage("Extension not ready");
         return;
     }
 
@@ -145,7 +145,7 @@ export function setFileState(state: fileState, file?: vscode.Uri) {
         return;
     }
 
-    const sourceCodeFile = file ? file.fsPath.slice(projectRoot.length + 1) : context.sourceCodeFile;
+    const sourceCodeFile = file.fsPath.slice(projectRoot.length + 1);
     let fileData = auditData.files[sourceCodeFile];
     if (!fileData) {
         fileData = { lines: 0, state: state, notes: {} };
@@ -192,11 +192,14 @@ type NoteContext = {
 }
 
 function getNoteContext(): NoteContext | undefined {
-    if (!vscode.window.activeTextEditor || !auditData) {
+    if (!auditData) {
         vscode.window.showErrorMessage("Extension not ready");
         return;
     }
-
+    if (!vscode.window.activeTextEditor) {
+        vscode.window.showInformationMessage("No file selected");
+        return;
+    }
     const sourceCodeFile = vscode.window.activeTextEditor?.document.fileName.slice(projectRoot.length + 1);
     if (!sourceCodeFile) {
         vscode.window.showErrorMessage("File not found");
