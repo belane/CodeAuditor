@@ -64,18 +64,29 @@ export class progressProvider implements vscode.TreeDataProvider<Entry> {
 	async getChildren(element?: Entry): Promise<Entry[]> {
 		if (element) {
 			const children = await this.readDirectory(element.uri.fsPath);
-			return children.map(([name, state, num_issues, type]) => ({ uri: vscode.Uri.file(path.join(element.uri.fsPath, name)), state: state, num_issues: num_issues, type: type }));
+			children.sort((a, b) => {
+				if (a[3] === b[3]) { return a[0].localeCompare(b[0]); }
+				return a[3] === vscode.FileType.Directory ? -1 : 1;
+			});
+			return children.map(([name, state, num_issues, type]) => ({
+				uri: vscode.Uri.file(path.join(element.uri.fsPath, name)),
+				state: state,
+				num_issues: num_issues,
+				type: type
+			}));
 		}
-
 		if (projectRoot) {
 			const children = await this.readDirectory(projectRoot);
 			children.sort((a, b) => {
-				if (a[3] === b[3]) {
-					return a[0].localeCompare(b[0]);
-				}
+				if (a[3] === b[3]) { return a[0].localeCompare(b[0]); }
 				return a[3] === vscode.FileType.Directory ? -1 : 1;
 			});
-			return children.map(([name, state, num_issues, type]) => ({ uri: vscode.Uri.file(path.join(projectRoot, name)), state: state, num_issues: num_issues, type: type }));
+			return children.map(([name, state, num_issues, type]) => ({
+				uri: vscode.Uri.file(path.join(projectRoot, name)),
+				state: state,
+				num_issues: num_issues,
+				type: type
+			}));
 		}
 		return [];
 	}
