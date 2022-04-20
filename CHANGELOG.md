@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.9
+
+- Improved exclusion wizard.
+- Bugfixes.
+
 ## 0.2.8
 
 - Added an explorer to track the progress of the audit.

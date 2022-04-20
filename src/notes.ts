@@ -36,7 +36,7 @@ export async function newNote(line?: string) {
         };
     }
 
-    const inputBox = await promptInputBox(note.message);
+    const inputBox = await promptInputBox(note.message, 'describe note');
     if (!inputBox) {
         return;
     }
@@ -172,7 +172,7 @@ export async function excludePath(str_path: vscode.Uri) {
     const accept = await vscode.window.showInformationMessage(`Add '${exclusion}' to exclusion list?`, options, "Add", "Customize");
     if (!accept) { return; }
     if (accept == "Customize") {
-        const inputBox = await promptInputBox(exclusion);
+        const inputBox = await promptInputBox(exclusion, 'write exclusion');
         if (!inputBox) { return; }
         exclusion = inputBox.trim();
     }
@@ -226,10 +226,10 @@ function searchNoteLine(sourceCodeFile: string, line: number): number {
     return 0;
 }
 
-async function promptInputBox(msg?: string) {
+async function promptInputBox(msg?: string, place_holder?: string) {
     return await vscode.window.showInputBox({
         value: msg,
-        placeHolder: 'write notes',
+        placeHolder: place_holder,
         ignoreFocusOut: true
     });
 }
