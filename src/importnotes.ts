@@ -38,6 +38,8 @@ interface semgrepData {
     }[];
 }
 
+export const noteSeparator = " // ";
+
 export async function ImportSlitherReport() {
     if (!vscode.workspace.workspaceFolders) {
         return;
@@ -116,7 +118,7 @@ export async function ImportSlitherReport() {
                 if (note.message?.includes(message)) {
                     continue;
                 }
-                note.message = message + "  //  " + note.message;
+                note.message = message + noteSeparator + note.message;
                 note.state = noteState.Open;
             }
             fileData.notes[line] = note;
@@ -204,7 +206,7 @@ export async function ImportSemgrepReport() {
             if (note.message?.includes(message)) {
                 continue;
             }
-            note.message = message + "  //  " + note.message;
+            note.message = message + noteSeparator + note.message;
             note.state = noteState.Open;
         }
         fileData.notes[line] = note;

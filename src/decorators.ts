@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { noteState, noteType } from './types';
 import { auditData, projectRoot } from './storage';
+import { noteSeparator } from './importnotes';
 
 
 let timeout: NodeJS.Timer | undefined = undefined;
@@ -66,6 +67,7 @@ export function updateDecorators() {
         }
         const noteSel = new vscode.Range(startSel, 0, endSel, 0);
         if (!currentDoc.validateRange(noteSel)) { continue; }
+        if (!note.message) { continue; }
 
         let icon: string;
         if (note.type == noteType.Note) { icon = "📘"; }
@@ -75,21 +77,19 @@ export function updateDecorators() {
 
         const title = `**${note.type.charAt(0).toUpperCase() + note.type.slice(1)}** *(${note.state})*`;
         const stateButtons = `- [Confirm](command:code-auditor.setNoteState?"confirmed-${lineNum}") · [Discard](command:code-auditor.setNoteState?"discarded-${lineNum}")`;
-        const msg = `  \`\`\`${note.message}\`\`\``;
         const editButtons = `[Edit](command:code-auditor.newNote?${lineNum}) · [Remove](command:code-auditor.removeNote?${lineNum})`;
 
         const panelHeader = new vscode.MarkdownString([icon, title, stateButtons].join(' '));
         panelHeader.isTrusted = true;
 
-        const panelBody = new vscode.MarkdownString(msg);
-        panelBody.isTrusted = true;
+        const panelBody = note.message.split(noteSeparator).map(item => new vscode.MarkdownString(`\`\`\`${item.trim()}\`\`\``));
 
         const panelFooter = new vscode.MarkdownString(editButtons);
         panelFooter.isTrusted = true;
 
         const decoration = {
             range: noteSel,
-            hoverMessage: [panelHeader, panelBody, panelFooter],
+            hoverMessage: [panelHeader, ...panelBody, panelFooter],
         };
 
         if (note.state === noteState.Discarded) {
