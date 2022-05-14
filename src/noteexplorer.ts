@@ -63,6 +63,7 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
                 )
             );
         }
+        nodes.sort((a, b) => { return a.sourcePath.localeCompare(b.sourcePath); });
         return nodes;
     }
 

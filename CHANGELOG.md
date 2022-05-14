@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.0
+
+- Improve the view of imported notes.
+- Fix note explorer sorting.
+
 ## 0.2.9
 
 - Improved exclusion wizard.
