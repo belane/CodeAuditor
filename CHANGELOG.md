@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.1
+
+- Generate references report (beta).
+- Bugfixes.
+
 ## 0.3.0
 
 - Improve the view of imported notes.
@@ -14,7 +19,7 @@
 
 - Added an explorer to track the progress of the audit.
 - Possibility to mark files as reviewed.
-- Functionality to exclude files and folders from the audit.
+- Functionality to exclude files and folders from the audit scope.
 - Cleaning of icons to reduce the size of the extension.
 - Minify SVG.
 - Fix: update minimist package.

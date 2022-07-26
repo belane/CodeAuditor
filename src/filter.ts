@@ -17,7 +17,7 @@ export const currentFilter: filerOptions = {
 };
 
 export function toggleFilter(filter: string) {
-    if(Object.prototype.hasOwnProperty.call(currentFilter, filter)) {
+    if (Object.prototype.hasOwnProperty.call(currentFilter, filter)) {
         currentFilter[filter] = !currentFilter[filter];
     }
     vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + filter, currentFilter[filter]);
@@ -59,6 +59,9 @@ export function listFilterNotes(): FileCollection {
                 continue;
             }
             notes[parseInt(lineNum)] = note;
+        }
+        if (Object.keys(notes).length === 0) {
+            continue;
         }
         nodes[fileName] = {
             lines: fileInfo.lines,

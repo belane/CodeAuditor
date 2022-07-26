@@ -5,7 +5,7 @@ import { noteProvider } from './noteexplorer';
 import { fileState, noteState, noteType } from './types';
 import { excludePath, newNote, removeNote, setFileState, setNoteState, setNoteType } from './notes';
 import { progressProvider } from './progressexplorer';
-import { generateReport } from './report';
+import { generateReferences, generateReport } from './report';
 import { auditDataInit } from './storage';
 import { ImportSemgrepReport, ImportSlitherReport } from './importnotes';
 
@@ -49,8 +49,13 @@ export function activate(context: vscode.ExtensionContext) {
 		if (item) { excludePath(item.uri); }
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.generateReport', () => {
-		const out = vscode.window.createOutputChannel("report");
+		const out = vscode.window.createOutputChannel("Audit Report");
 		generateReport(out);
+		out.show();
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.generateReferences', () => {
+		const out = vscode.window.createOutputChannel("Audit References");
+		generateReferences(out);
 		out.show();
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSlither', () => {

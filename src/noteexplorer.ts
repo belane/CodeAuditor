@@ -46,9 +46,6 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
         const nodes: noteNode[] = [];
 
         for (const [fileName, fileInfo] of Object.entries(filteredNotes)) {
-            if (Object.keys(fileInfo.notes).length === 0) {
-                continue;
-            }
             const label = path.parse(fileName).base;
             const desc = path.parse(fileName).dir;
             nodes.push(

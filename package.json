@@ -2,7 +2,7 @@
 	"name": "code-auditor",
 	"displayName": "CodeAuditor",
 	"description": "Code Auditor Notebook",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"publisher": "red4sec",
 	"icon": "resources/code-auditor.png",
 	"readme": "README.md",
@@ -40,6 +40,7 @@
 		"onCommand:code-auditor.newNote",
 		"onCommand:code-auditor.removeNote",
 		"onCommand:code-auditor.generateReport",
+		"onCommand:code-auditor.generateReferences",
 		"onCommand:code-auditor.setNoteState",
 		"onCommand:code-auditor.importSlither",
 		"onCommand:code-auditor.importSemgrep",
@@ -108,6 +109,14 @@
 			{
 				"command": "code-auditor.generateReport",
 				"title": "Audit: Generate report",
+				"icon": {
+					"light": "resources/light/preview.svg",
+					"dark": "resources/dark/preview.svg"
+				}
+			},
+			{
+				"command": "code-auditor.generateReferences",
+				"title": "Audit: Generate references",
 				"icon": {
 					"light": "resources/light/preview.svg",
 					"dark": "resources/dark/preview.svg"
@@ -265,6 +274,10 @@
 					"when": "view == code-auditor.noteExplorer"
 				},
 				{
+					"command": "code-auditor.generateReferences",
+					"when": "view == code-auditor.noteExplorer"
+				},
+				{
 					"command": "code-auditor.importSlither",
 					"when": "view == code-auditor.noteExplorer"
 				},
@@ -272,7 +285,6 @@
 					"command": "code-auditor.importSemgrep",
 					"when": "view == code-auditor.noteExplorer"
 				}
-
 			],
 			"view/title": [
 				{
