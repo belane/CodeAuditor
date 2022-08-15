@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.2
+
+- Improved report generation.
+- Documentation.
+
 ## 0.3.1
 
 - Generate references report (beta).
