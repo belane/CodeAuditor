@@ -10,22 +10,25 @@ import { auditDataInit } from './storage';
 import { ImportSemgrepReport, ImportSlitherReport } from './importnotes';
 
 
+let outReport: vscode.OutputChannel;
+let outRefs: vscode.OutputChannel;
+
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Loading Code Auditor');
 	auditDataInit();
 
 	/** Explorer Views */
-	const noteExplorer : noteProvider = new noteProvider();
+	const noteExplorer: noteProvider = new noteProvider();
 	vscode.window.registerTreeDataProvider('code-auditor.noteExplorer', noteExplorer);
 
-	const progressExplorer : progressProvider = new progressProvider();
+	const progressExplorer: progressProvider = new progressProvider();
 	vscode.window.registerTreeDataProvider('code-auditor.progressExplorer', progressExplorer);
 
 	/** Commands */
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.newNote', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.newNote', (line: string) => {
 		newNote(line);
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.removeNote', (line : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.removeNote', (line: string) => {
 		removeNote(line);
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.reopenNote', () => {
@@ -34,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.toggleType', () => {
 		setNoteType();
 	}));
-	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.setNoteState', (args : string) => {
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.setNoteState', (args: string) => {
 		if (!args) { return; }
 		const [state, line] = args.split('-');
 		setNoteState(<any>state, line);
@@ -49,14 +52,22 @@ export function activate(context: vscode.ExtensionContext) {
 		if (item) { excludePath(item.uri); }
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.generateReport', () => {
-		const out = vscode.window.createOutputChannel("Audit Report");
-		generateReport(out);
-		out.show();
+		if (!outReport) {
+			outReport = vscode.window.createOutputChannel("Audit Report");
+		} else {
+			outReport.clear();
+		}
+		generateReport(outReport);
+		outReport.show();
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.generateReferences', () => {
-		const out = vscode.window.createOutputChannel("Audit References");
-		generateReferences(out);
-		out.show();
+		if (!outRefs) {
+			outRefs = vscode.window.createOutputChannel("Audit References");
+		} else {
+			outRefs.clear();
+		}
+		generateReferences(outRefs);
+		outRefs.show();
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.importSlither', () => {
 		ImportSlitherReport();

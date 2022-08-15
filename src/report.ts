@@ -5,6 +5,9 @@ import { listFilterNotes } from './filter';
 import { noteSeparator } from './importnotes';
 
 
+let baseURL: string;
+let groupBy: number;
+
 export function generateReport(out: vscode.OutputChannel) {
     if (!auditData) {
         vscode.window.showErrorMessage("Extension not ready");
@@ -15,9 +18,12 @@ export function generateReport(out: vscode.OutputChannel) {
     for (const fileName of Object.keys(filteredNotes).sort()) {
         out.appendLine(`${fileName}`);
         for (const [lineNum, note] of Object.entries(filteredNotes[fileName].notes)) {
+            if (!note.message) { continue; }
             let afectedLines = note.length > 1 ? `${lineNum}:${parseInt(lineNum) + note.length - 1}` : lineNum;
             if (afectedLines.length < 4) { afectedLines += '\t'; }
-            out.appendLine(`\t${afectedLines}\t- ${note.type}: ${note.state}\t=> ${note.message}`);
+            for (const msg of note.message.split(noteSeparator)) {
+                out.appendLine(`\t${afectedLines}\t- ${note.type}: ${note.state}\t=> ${msg.trim()}`);
+            }
         }
     }
 }
@@ -28,25 +34,39 @@ export async function generateReferences(out: vscode.OutputChannel) {
         return;
     }
 
-    const inputSort = await vscode.window.showInputBox({
-        value: "3",
-        prompt: "Sort by the first # words",
-        placeHolder: "number between 1 and 10",
-        ignoreFocusOut: true,
+    const groupOption = await vscode.window.showQuickPick(
+        ["No", "Yes"], {
+        placeHolder: "Group notes by description?",
+        ignoreFocusOut: true
     });
-    if (!inputSort) {
+    if (!groupOption) {
         vscode.window.showErrorMessage("Operation cancelled");
         return;
     }
-    let sortBy = parseInt(inputSort);
-    if (!sortBy || sortBy < 1 || sortBy > 10) { sortBy = 2; }
+
+    if (groupOption.toLocaleLowerCase() === "yes") {
+        const inputGroup = await vscode.window.showInputBox({
+            value: groupBy === 0 ? "3" : groupBy.toString(),
+            prompt: "Group by first # words",
+            placeHolder: "number between 1 and 10",
+            ignoreFocusOut: true,
+        });
+        if (!inputGroup) {
+            vscode.window.showErrorMessage("Operation cancelled");
+            return;
+        }
+        groupBy = parseInt(inputGroup);
+        if (isNaN(groupBy) || groupBy < 1 || groupBy > 10) { groupBy = 2; }
+    } else {
+        groupBy = 0;
+    }
 
     let inputUrl = await vscode.window.showInputBox({
+        value: baseURL,
         prompt: "Enter the base URL or leave empty",
         placeHolder: "optional base URL",
         ignoreFocusOut: true
     });
-    let baseURL;
     if (inputUrl) {
         inputUrl = inputUrl.trim();
         if (!inputUrl.endsWith('/')) {
@@ -69,8 +89,8 @@ export async function generateReferences(out: vscode.OutputChannel) {
             const lineInd = baseURL ? 'L' : '';
             const afectedLines = note.length > 1 ? `${lineInd}${lineNum}-${lineInd}${parseInt(lineNum) + note.length - 1}` : lineInd + lineNum;
 
-            for (const x of note.message.split(noteSeparator)) {
-                const key = x.toLowerCase().split(' ').slice(0, sortBy).join(' ');
+            for (const msg of note.message.split(noteSeparator)) {
+                const key = groupBy ? msg.toLowerCase().split(' ').slice(0, groupBy).join(' ') : msg;
                 const ref = `${fileName}#${afectedLines}`;
 
                 if (noterefs[key]) {

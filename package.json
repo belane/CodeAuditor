@@ -2,7 +2,7 @@
 	"name": "code-auditor",
 	"displayName": "CodeAuditor",
 	"description": "Code Auditor Notebook",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"publisher": "red4sec",
 	"icon": "resources/code-auditor.png",
 	"readme": "README.md",
@@ -24,6 +24,8 @@
 	"keywords": [
 		"audit",
 		"code audit",
+		"security",
+		"review",
 		"audit-tag",
 		"tag",
 		"mark",
@@ -108,7 +110,7 @@
 			},
 			{
 				"command": "code-auditor.generateReport",
-				"title": "Audit: Generate report",
+				"title": "Audit: Generate Report",
 				"icon": {
 					"light": "resources/light/preview.svg",
 					"dark": "resources/dark/preview.svg"
@@ -116,7 +118,7 @@
 			},
 			{
 				"command": "code-auditor.generateReferences",
-				"title": "Audit: Generate references",
+				"title": "Audit: Generate References",
 				"icon": {
 					"light": "resources/light/preview.svg",
 					"dark": "resources/dark/preview.svg"
