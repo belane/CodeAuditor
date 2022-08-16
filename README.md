@@ -1,6 +1,6 @@
 # CodeAuditor
 
-CodeAuditor is a Visual Studio Code extension to help auditors to take notes and categorize issues during a source code audit.
+CodeAuditor is a Visual Studio Code extension which helps auditors to take notes and categorize issues during a source code audit.
 
 * Take audit notes without modifying the source code.
 * Toggle Issues status.
@@ -36,7 +36,7 @@ CodeAuditor is a Visual Studio Code extension to help auditors to take notes and
 
 ## Installation
 
-~~**Method 1:** By [Visual Studio Market Place](https://marketplace.visualstudio.com/items?itemName=code-auditor#overview) and click  `Install`.~~
+~~**Method 1:** By [Visual Studio Market Place](https://marketplace.visualstudio.com/items?itemName=code-auditor#overview) and click `Install`.~~
 
 ~~**Method 2:** Inside the VS Code extensions section, search for `CodeAuditor` and click `Install`.~~
 
