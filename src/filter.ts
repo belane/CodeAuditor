@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import { join } from 'path';
+import { statSync } from 'fs';
 import { auditData, CodeAuditorFile } from './storage';
 import { noteType, noteState, NoteCollection, FileCollection } from './types';
 
@@ -89,22 +91,39 @@ function patternCompare(text: string, pattern: string): boolean {
     return true;
 }
 
-export function isPathExcluded(str_path: string): boolean {
-    if (str_path == CodeAuditorFile) {
+export function isPathExcluded(dirPath: string, name: string): boolean {
+    if (name == CodeAuditorFile) {
         return true;
     }
     if (!auditData.exclude || Object.keys(auditData.exclude).length === 0) {
         return false;
     }
+
+    const inclusions: Array<string> = [];
     for (const exclusion of auditData.exclude) {
-        if (str_path == exclusion) {
+        if (exclusion[0] === '!') {
+            inclusions.push(exclusion.slice(1));
+            continue;
+        }
+        if (name == exclusion) {
             return true;
         }
         if (exclusion.includes('*')) {
-            if (patternCompare(str_path, exclusion)) {
+            if (patternCompare(name, exclusion)) {
                 return true;
             }
         }
     }
-    return false;
+
+    for (const inclusion of inclusions) {
+        const stat = statSync(join(dirPath, name));
+        if (stat.isDirectory()) {
+            return false;
+        }
+        if (patternCompare(name, inclusion)) {
+            return false;
+        }
+    }
+
+    return inclusions.length > 0;
 }
