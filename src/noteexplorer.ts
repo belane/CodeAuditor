@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { existsSync } from 'fs';
+import { parse, join } from 'path';
 import { auditData, projectRoot } from './storage';
 import { noteType } from './types';
 import { listFilterNotes, currentFilter } from './filter';
@@ -46,8 +46,8 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
         const nodes: noteNode[] = [];
 
         for (const [fileName, fileInfo] of Object.entries(filteredNotes)) {
-            const label = path.parse(fileName).base;
-            const desc = path.parse(fileName).dir;
+            const label = parse(fileName).base;
+            const desc = parse(fileName).dir;
             nodes.push(
                 new noteNode(
                     label,
@@ -86,7 +86,7 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
     }
     private showNote(filePath: string, line: string): void {
         const focusLine = parseInt(line) - 1;
-        const fullPath = path.join(projectRoot, filePath);
+        const fullPath = join(projectRoot, filePath);
         if (!existsSync(fullPath)) {
             vscode.window.showErrorMessage("File not found");
             return;
@@ -126,13 +126,13 @@ class noteNode extends vscode.TreeItem {
         if (!rootNode) {
             if (type == noteType.Issue) {
                 this.iconPath = {
-                    light: path.join(__filename, '..', '..', 'resources/light/bug.svg'),
-                    dark: path.join(__filename, '..', '..', 'resources/dark/bug.svg')
+                    light: join(__filename, '..', '..', 'resources/light/bug.svg'),
+                    dark: join(__filename, '..', '..', 'resources/dark/bug.svg')
                 };
             } else {
                 this.iconPath = {
-                    light: path.join(__filename, '..', '..', 'resources/light/output.svg'),
-                    dark: path.join(__filename, '..', '..', 'resources/dark/output.svg')
+                    light: join(__filename, '..', '..', 'resources/light/output.svg'),
+                    dark: join(__filename, '..', '..', 'resources/dark/output.svg')
                 };
             }
         }

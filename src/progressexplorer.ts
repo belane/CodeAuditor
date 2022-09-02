@@ -96,7 +96,7 @@ export class progressProvider implements vscode.TreeDataProvider<Entry> {
 		const children = readdirSync(dirPath);
 		const result: [string, string, number, vscode.FileType][] = [];
 		for (const child of children) {
-			if (isPathExcluded(child)) {
+			if (isPathExcluded(dirPath, child)) {
 				continue;
 			}
 
