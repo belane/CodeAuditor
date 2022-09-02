@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { existsSync, readFileSync } from 'fs';
-import { join, normalize } from 'path';
+import { join, normalize, basename } from 'path';
 import { fileState, Note, noteState, noteType } from './types';
 import { auditData, auditDataSave, projectRoot } from './storage';
 import { updateDecorators } from './decorators';
@@ -64,16 +64,17 @@ export async function ImportSlitherReport() {
 
     let data: slitherData;
     const fileContent = readFileSync(importFile);
+    const importFileName = basename(importFile);
     try {
         data = JSON.parse(fileContent.toString('utf8'));
     }
     catch (err) {
-        vscode.window.showErrorMessage(`Fail to import ${importFile}`);
+        vscode.window.showErrorMessage(`Fail to import ${importFileName}`);
         return;
     }
 
     if (!data || !data.success) {
-        vscode.window.showErrorMessage(`Invalid format ${importFile}`);
+        vscode.window.showErrorMessage(`Invalid format ${importFileName}`);
         return;
     }
 
@@ -130,7 +131,7 @@ export async function ImportSlitherReport() {
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
-    vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFile}`);
+    vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFileName}`);
 }
 
 export async function ImportSemgrepReport() {
@@ -157,16 +158,17 @@ export async function ImportSemgrepReport() {
 
     let data: semgrepData;
     const fileContent = readFileSync(importFile);
+    const importFileName = basename(importFile);
     try {
         data = JSON.parse(fileContent.toString('utf8'));
     }
     catch (err) {
-        vscode.window.showErrorMessage(`Fail to import ${importFile}`);
+        vscode.window.showErrorMessage(`Fail to import ${importFileName}`);
         return;
     }
 
     if (!data || !data.paths || !data.results) {
-        vscode.window.showErrorMessage(`Invalid format ${importFile}`);
+        vscode.window.showErrorMessage(`Invalid format ${importFileName}`);
         return;
     }
 
@@ -217,5 +219,5 @@ export async function ImportSemgrepReport() {
     updateDecorators();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
-    vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFile}`);
+    vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFileName}`);
 }
