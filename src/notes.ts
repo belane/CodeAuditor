@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
+import { basename } from 'path';
 import { auditDataSave, auditData, projectRoot } from './storage';
 import { updateDecorators } from './decorators';
 import { fileState, Note, noteState, noteType } from './types';
-import * as path from 'path';
+
 
 export async function newNote(line?: string) {
     const context = getNoteContext();
@@ -165,7 +166,7 @@ export function setFileState(state: fileState, file: vscode.Uri) {
 }
 
 export async function excludePath(str_path: vscode.Uri) {
-    let exclusion = path.basename(str_path.fsPath);
+    let exclusion = basename(str_path.fsPath);
     const options: vscode.MessageOptions = {
         modal: true
     };

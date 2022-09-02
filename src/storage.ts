@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { existsSync, readFileSync, createWriteStream } from 'fs';
 import { join } from 'path';
-import  { CodeAuditorData } from './types';
+import { existsSync, readFileSync, createWriteStream } from 'fs';
+import { CodeAuditorData } from './types';
 
 
 export const CodeAuditorFile = '.auditnotes.json';
