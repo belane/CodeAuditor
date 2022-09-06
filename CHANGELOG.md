@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.3
+
+- New Scope Filters: Filters starting with "!" define the elements to display, excluding the rest.
+- Added option to import multiple files at once.
+- Better display on imports.
+
 ## 0.3.2
 
 - Improved report generation.
