@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.4
+
+- Bugfix: Fix references report groupBy.
+
 ## 0.3.3
 
 - New Scope Filters: Filters starting with "!" define the elements to display, excluding the rest.

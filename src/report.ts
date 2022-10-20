@@ -46,7 +46,7 @@ export async function generateReferences(out: vscode.OutputChannel) {
 
     if (groupOption.toLocaleLowerCase() === "yes") {
         const inputGroup = await vscode.window.showInputBox({
-            value: groupBy === 0 ? "3" : groupBy.toString(),
+            value: isNaN(groupBy) || groupBy === 0 ? "3" : groupBy.toString(),
             prompt: "Group by first # words",
             placeHolder: "number between 1 and 10",
             ignoreFocusOut: true,
