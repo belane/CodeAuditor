@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.5
+
+- Audit progress tree view follows open file.
+
 ## 0.3.4
 
 - Bugfix: Fix references report groupBy.
