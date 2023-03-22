@@ -3,6 +3,8 @@
 ## 0.3.5
 
 - Audit progress tree view follows open file.
+- Audit notes tree view follows open file.
+- Project refactor.
 
 ## 0.3.4
 

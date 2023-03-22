@@ -10,17 +10,12 @@ export class NoteNode extends vscode.TreeItem {
         public readonly sourcePath: string,
         public readonly tooltip: string,
         public readonly description: string,
-        public readonly rootNode: boolean,
-        public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+        public readonly parent?: NoteNode,
         public readonly command?: vscode.Command
     ) {
-        super(label, collapsibleState);
-        this.sourcePath = sourcePath;
-        this.tooltip = tooltip;
-        this.description = description;
-        this.rootNode = rootNode;
+        super(label, parent ? vscode.TreeItemCollapsibleState.None : vscode.TreeItemCollapsibleState.Collapsed);
         this.contextValue = "code-auditor.noteExplorer.node";
-        if (!rootNode) {
+        if (parent) {
             if (type == noteType.Issue) {
                 this.iconPath = {
                     light: join(__filename, '..', '..', 'resources/light/bug.svg'),

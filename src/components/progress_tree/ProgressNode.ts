@@ -15,11 +15,6 @@ export class ProgressNode extends vscode.TreeItem {
             uri,
             type == vscode.FileType.Directory ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
         );
-        this.uri = uri;
-        this.state = state;
-        this.num_issues = num_issues;
-        this.type = type;
-        this.parent = parent;
 
         if (this.type === vscode.FileType.Directory) {
             this.contextValue = "code-auditor.progressExplorer.folder";

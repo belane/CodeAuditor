@@ -26,7 +26,7 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
             return;
         }
 
-        let node: ProgressNode = this.items[uri.fsPath]
+        let node: ProgressNode = this.items[uri.fsPath];
         if (node) {
             if (currentFilter.reviewed && node.state == fileState.Reviewed) {
                 return;
@@ -40,7 +40,7 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
             for (const p of paths) {
                 current_path = vscode.Uri.parse(current_path + sep + p).toString(true);
                 if (this.items[current_path] && this.items[current_path].type == vscode.FileType.Directory) {
-                    await this.getChildren(this.items[current_path])
+                    await this.getChildren(this.items[current_path]);
                 } else {
                     break;
                 }
@@ -78,9 +78,9 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
                 num_issues,
                 type,
                 element
-            )
+            );
             nodes.push(node);
-            this.items[node.uri.fsPath] = node
+            this.items[node.uri.fsPath] = node;
         }
         return nodes;
     }
@@ -132,4 +132,3 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
         return Promise.resolve(result);
     }
 }
-

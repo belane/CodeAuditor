@@ -28,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (editor) {
             triggerUpdateDecorations();
             progress_explorer.revealNodeFromUri(progress_tree, editor.document.uri);
+            note_explorer.revealNodeFromUri(note_tree, editor.document.uri);
         }
     }, null, context.subscriptions);
 

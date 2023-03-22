@@ -9,6 +9,7 @@ import { NoteNode } from './noteNode';
 export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
     private _onDidChangeTreeData: vscode.EventEmitter<NoteNode | undefined> = new vscode.EventEmitter<NoteNode | undefined>();
     readonly onDidChangeTreeData: vscode.Event<NoteNode | undefined> = this._onDidChangeTreeData.event;
+    private items: { [key: string]: NoteNode } = {};
 
     constructor() {
         vscode.commands.registerCommand('code-auditor.showNote', (file, line) => this.showNote(file, line));
@@ -19,7 +20,20 @@ export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
     }
 
     public refresh(): void {
+        this.items = {};
         this._onDidChangeTreeData.fire();
+    }
+
+    async revealNodeFromUri(tree: vscode.TreeView<NoteNode>, uri: vscode.Uri) {
+        if (!tree.visible) {
+            return;
+        }
+
+        const key = uri.fsPath.slice(projectRoot.length + 1);
+        const node: NoteNode = this.items[key];
+        if (node) {
+            tree.reveal(node, { select: true, focus: false });
+        }
     }
 
     getTreeItem(element: NoteNode): vscode.TreeItem {
@@ -34,11 +48,15 @@ export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
             return Promise.resolve(this.getRootNodes());
         }
 
-        if (!element.rootNode) {
+        if (element.parent) {
             return Promise.resolve([]);
         } else {
             return Promise.resolve(this.getNotes(element.sourcePath));
         }
+    }
+
+    async getParent(element: NoteNode): Promise<NoteNode | undefined> {
+        return element.parent;
     }
 
     private getRootNodes(): NoteNode[] {
@@ -48,17 +66,16 @@ export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
         for (const [fileName, fileInfo] of Object.entries(filteredNotes)) {
             const label = parse(fileName).base;
             const desc = parse(fileName).dir;
-            nodes.push(
-                new NoteNode(
-                    label,
-                    'root',
-                    fileName,
-                    auditData.files[fileName].state,
-                    desc,
-                    true,
-                    vscode.TreeItemCollapsibleState.Collapsed
-                )
+
+            const node = new NoteNode(
+                label,
+                'root',
+                fileName,
+                auditData.files[fileName].state,
+                desc
             );
+            nodes.push(node);
+            this.items[fileName] = node;
         }
         nodes.sort((a, b) => { return a.sourcePath.localeCompare(b.sourcePath); });
         return nodes;
@@ -76,14 +93,14 @@ export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
                     file,
                     afectedLines,
                     '',
-                    false,
-                    vscode.TreeItemCollapsibleState.None,
+                    this.items[file],
                     { command: 'code-auditor.showNote', title: "Open File", arguments: [file, lineNum] }
                 )
             );
         }
         return nodes;
     }
+
     private showNote(filePath: string, line: string): void {
         const focusLine = parseInt(line) - 1;
         const fullPath = join(projectRoot, filePath);
