@@ -1,46 +1,16 @@
 import * as vscode from 'vscode';
 import { existsSync, readFileSync } from 'fs';
 import { join, normalize, basename } from 'path';
-import { fileState, Note, noteState, noteType } from './types';
-import { auditData, auditDataSave, projectRoot } from './storage';
-import { updateDecorators } from './decorators';
+import { fileState, Note, noteState, noteType } from '../../types/types';
+import { auditData, auditDataSave, projectRoot } from '../../core/AuditStorage';
+import { updateDecorations } from '../../components/decoration/Decorator';
+import { ISemgrepData } from './ISemgrepData';
+import { ISlitherData } from './ISlitherData';
 
-
-interface slitherData {
-    success: boolean;
-    results: {
-        detectors: {
-            check: string;
-            description: string;
-            elements: {
-                name: string;
-                type: string;
-                source_mapping: {
-                    filename_relative: string;
-                    lines: number[];
-                }
-            }[];
-        }[];
-    };
-}
-
-interface semgrepData {
-    paths: any;
-    results: {
-        check_id: string;
-        path: string;
-        start: {
-            line: number;
-        };
-        extra: {
-            message: string;
-        };
-    }[];
-}
 
 export const noteSeparator = " // ";
 
-export async function ImportSlitherReport() {
+export async function importSlitherReport() {
     if (!vscode.workspace.workspaceFolders) {
         return;
     }
@@ -62,7 +32,7 @@ export async function ImportSlitherReport() {
             continue;
         }
 
-        let data: slitherData;
+        let data: ISlitherData;
         const fileContent = readFileSync(importFile.fsPath);
         const importFileName = basename(importFile.fsPath);
         try {
@@ -128,14 +98,14 @@ export async function ImportSlitherReport() {
             }
         }
         auditDataSave();
-        updateDecorators();
+        updateDecorations();
         vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
         vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
         vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFileName}`);
     }
 }
 
-export async function ImportSemgrepReport() {
+export async function importSemgrepReport() {
     if (!vscode.workspace.workspaceFolders) {
         return;
     }
@@ -157,7 +127,7 @@ export async function ImportSemgrepReport() {
             continue;
         }
 
-        let data: semgrepData;
+        let data: ISemgrepData;
         const fileContent = readFileSync(importFile.fsPath);
         const importFileName = basename(importFile.fsPath);
         try {
@@ -217,7 +187,7 @@ export async function ImportSemgrepReport() {
             importCounter++;
         }
         auditDataSave();
-        updateDecorators();
+        updateDecorations();
         vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
         vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
         vscode.window.showInformationMessage(`Succesfully imported ${importCounter} issues from ${importFileName}`);

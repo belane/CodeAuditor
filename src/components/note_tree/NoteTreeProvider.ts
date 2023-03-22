@@ -1,32 +1,32 @@
 import * as vscode from 'vscode';
 import { existsSync } from 'fs';
 import { parse, join } from 'path';
-import { auditData, projectRoot } from './storage';
-import { noteType } from './types';
-import { listFilterNotes, currentFilter } from './filter';
+import { auditData, projectRoot } from '../../core/AuditStorage';
+import { listFilterNotes, currentFilter } from '../../core/FilterProvider';
+import { NoteNode } from './NoteNode';
 
 
-export class noteProvider implements vscode.TreeDataProvider<noteNode> {
-    private _onDidChangeTreeData: vscode.EventEmitter<noteNode | undefined> = new vscode.EventEmitter<noteNode | undefined>();
-	readonly onDidChangeTreeData: vscode.Event<noteNode | undefined> = this._onDidChangeTreeData.event;
+export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
+    private _onDidChangeTreeData: vscode.EventEmitter<NoteNode | undefined> = new vscode.EventEmitter<NoteNode | undefined>();
+    readonly onDidChangeTreeData: vscode.Event<NoteNode | undefined> = this._onDidChangeTreeData.event;
 
     constructor() {
         vscode.commands.registerCommand('code-auditor.showNote', (file, line) => this.showNote(file, line));
         vscode.commands.registerCommand('code-auditor.noteExplorer.refresh', () => this.refresh());
         Object.entries(currentFilter).forEach(
             ([key, value]) => vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + key, value)
-          );
+        );
     }
 
     public refresh(): void {
-		this._onDidChangeTreeData.fire();
-	}
+        this._onDidChangeTreeData.fire();
+    }
 
-    getTreeItem(element: noteNode): vscode.TreeItem {
+    getTreeItem(element: NoteNode): vscode.TreeItem {
         return element;
     }
 
-    getChildren(element?: noteNode): Thenable<noteNode[]> {
+    getChildren(element?: NoteNode): Thenable<NoteNode[]> {
         if (!auditData) {
             return Promise.resolve([]);
         }
@@ -41,15 +41,15 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
         }
     }
 
-    private getRootNodes(): noteNode[] {
+    private getRootNodes(): NoteNode[] {
         const filteredNotes = listFilterNotes();
-        const nodes: noteNode[] = [];
+        const nodes: NoteNode[] = [];
 
         for (const [fileName, fileInfo] of Object.entries(filteredNotes)) {
             const label = parse(fileName).base;
             const desc = parse(fileName).dir;
             nodes.push(
-                new noteNode(
+                new NoteNode(
                     label,
                     'root',
                     fileName,
@@ -64,13 +64,13 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
         return nodes;
     }
 
-    private getNotes(file: string): noteNode[] {
+    private getNotes(file: string): NoteNode[] {
         const filteredNotes = listFilterNotes();
-        const nodes: noteNode[] = [];
+        const nodes: NoteNode[] = [];
         for (const [lineNum, note] of Object.entries(filteredNotes[file].notes)) {
             const afectedLines = note.length > 1 ? `${lineNum} - ${parseInt(lineNum) + note.length - 1}` : lineNum;
             nodes.push(
-                new noteNode(
+                new NoteNode(
                     note.message || 'none',
                     note.type,
                     file,
@@ -103,38 +103,5 @@ export class noteProvider implements vscode.TreeDataProvider<noteNode> {
                 );
             }
         );
-    }
-}
-
-class noteNode extends vscode.TreeItem {
-    constructor(
-        public readonly label: string,
-        public readonly type: string,
-        public readonly sourcePath: string,
-        public readonly tooltip: string,
-        public readonly description: string,
-        public readonly rootNode: boolean,
-        public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-        public readonly command?: vscode.Command
-    ) {
-        super(label, collapsibleState);
-        this.sourcePath = sourcePath;
-        this.tooltip = tooltip;
-        this.description = description;
-        this.rootNode = rootNode;
-        this.contextValue = "code-auditor.noteExplorer.node";
-        if (!rootNode) {
-            if (type == noteType.Issue) {
-                this.iconPath = {
-                    light: join(__filename, '..', '..', 'resources/light/bug.svg'),
-                    dark: join(__filename, '..', '..', 'resources/dark/bug.svg')
-                };
-            } else {
-                this.iconPath = {
-                    light: join(__filename, '..', '..', 'resources/light/output.svg'),
-                    dark: join(__filename, '..', '..', 'resources/dark/output.svg')
-                };
-            }
-        }
     }
 }

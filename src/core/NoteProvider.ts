@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { basename } from 'path';
-import { auditDataSave, auditData, projectRoot } from './storage';
-import { updateDecorators } from './decorators';
-import { fileState, Note, noteState, noteType } from './types';
+import { auditDataSave, auditData, projectRoot } from './AuditStorage';
+import { updateDecorations } from '../components/decoration/Decorator';
+import { fileState, Note, noteState, noteType } from '../types/types';
 
 
 export async function newNote(line?: string) {
@@ -46,7 +46,7 @@ export async function newNote(line?: string) {
     fileData.notes[selLine] = note;
     auditData.files[context.sourceCodeFile] = fileData;
     auditDataSave();
-    updateDecorators();
+    updateDecorations();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
@@ -69,11 +69,11 @@ export function removeNote(line?: string) {
 
     delete fileData.notes[selLine];
     if (fileData.state == fileState.Pending && Object.keys(fileData.notes).length === 0) {
-        updateDecorators();
+        updateDecorations();
         delete auditData.files[context.sourceCodeFile];
     }
     auditDataSave();
-    updateDecorators();
+    updateDecorations();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
@@ -102,7 +102,7 @@ export function setNoteState(state: noteState, line?: string) {
     fileData.notes[selLine].state = state;
     auditData.files[context.sourceCodeFile] = fileData;
     auditDataSave();
-    updateDecorators();
+    updateDecorations();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }
@@ -131,7 +131,7 @@ export function setNoteType(line?: string, newType?: noteType) {
 
     fileData.notes[selLine].type = newType;
     auditDataSave();
-    updateDecorators();
+    updateDecorations();
     vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');
     vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
 }

@@ -1,47 +1,13 @@
 import * as vscode from 'vscode';
-import { noteState, noteType } from './types';
-import { auditData, projectRoot } from './storage';
-import { noteSeparator } from './importnotes';
+import { noteState, noteType } from '../../types/types';
+import { auditData, projectRoot } from '../../core/AuditStorage';
+import { noteSeparator } from '../../modules/import/Imports';
+import { noteNoteDecorator, issueNoteDecorator, openNoteDecorator, discardNoteDecorator } from './DecorationTypes';
 
 
 let timeout: NodeJS.Timer | undefined = undefined;
 
-const noteNoteDecorator = vscode.window.createTextEditorDecorationType({
-    borderWidth: '0px',
-    borderStyle: 'solid',
-    overviewRulerColor: '#8a8a8a20',
-    overviewRulerLane: vscode.OverviewRulerLane.Right,
-    light: { borderColor: '#7a91ff25', backgroundColor: '#7a91ff25' },
-    dark: { borderColor: '#7a91ff25', backgroundColor: '#7a91ff25' }
-});
-
-const issueNoteDecorator = vscode.window.createTextEditorDecorationType({
-    borderWidth: '0px',
-    borderStyle: 'solid',
-    overviewRulerColor: 'red',
-    overviewRulerLane: vscode.OverviewRulerLane.Right,
-    light: { borderColor: '#FF000025', backgroundColor: '#FF000025' },
-    dark: { borderColor: '#FF000025', backgroundColor: '#FF000025' }
-});
-
-const openNoteDecorator = vscode.window.createTextEditorDecorationType({
-    borderWidth: '0px',
-    borderStyle: 'solid',
-    overviewRulerColor: '#ffb433',
-    overviewRulerLane: vscode.OverviewRulerLane.Right,
-    light: { borderColor: '#ffb43335', backgroundColor: '#ffb43335' },
-    dark: { borderColor: '#ffb43335', backgroundColor: '#ffb43335' }
-});
-
-const discardNoteDecorator = vscode.window.createTextEditorDecorationType({
-    borderWidth: '0px',
-    borderStyle: 'solid',
-    overviewRulerLane: vscode.OverviewRulerLane.Right,
-    light: { borderColor: '#8a8a8a19', backgroundColor: '#8a8a8a20' },
-    dark: { borderColor: '#8a8a8a19', backgroundColor: '#8a8a8a20' }
-});
-
-export function updateDecorators() {
+export function updateDecorations() {
     if (!vscode.window.activeTextEditor || !auditData) {
         return;
     }
@@ -94,19 +60,15 @@ export function updateDecorators() {
 
         if (note.state === noteState.Discarded) {
             discardedNotes.push(decoration);
-            continue;
         }
-        if (note.state === noteState.Open) {
+        else if (note.state === noteState.Open) {
             openNotes.push(decoration);
-            continue;
         }
-        if (note.type === noteType.Issue) {
+        else if (note.type === noteType.Issue) {
             issueNotes.push(decoration);
-            continue;
         }
-        if (note.type === noteType.Note) {
+        else if (note.type === noteType.Note) {
             noteNotes.push(decoration);
-            continue;
         }
     }
 
@@ -122,8 +84,8 @@ export function triggerUpdateDecorations(throttle?: boolean) {
         timeout = undefined;
     }
     if (throttle) {
-        timeout = setTimeout(updateDecorators, 500);
+        timeout = setTimeout(updateDecorations, 500);
     } else {
-        updateDecorators();
+        updateDecorations();
     }
 }

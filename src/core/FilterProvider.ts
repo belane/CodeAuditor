@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { join } from 'path';
 import { statSync } from 'fs';
-import { auditData, CodeAuditorFile } from './storage';
-import { noteType, noteState, NoteCollection, FileCollection } from './types';
+import { auditData, CodeAuditorFile } from './AuditStorage';
+import { noteType, noteState, NoteCollection, FileCollection } from '../types/types';
 
 
 type filerOptions = {

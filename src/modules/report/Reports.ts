@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { URL } from 'url';
-import { auditData } from './storage';
-import { listFilterNotes } from './filter';
-import { noteSeparator } from './importnotes';
+import { auditData } from '../../core/AuditStorage';
+import { listFilterNotes } from '../../core/FilterProvider';
+import { noteSeparator } from '../import/Imports';
 
 
 let baseURL: string;

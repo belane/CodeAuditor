@@ -1,15 +1,16 @@
 import * as vscode from 'vscode';
-import { join, parse, sep } from 'path';
+import { join, sep } from 'path';
 import { statSync, readdirSync } from 'fs';
-import { auditData, projectRoot } from './storage';
-import { fileState, noteState, noteType } from './types';
-import { currentFilter, isPathExcluded } from './filter';
+import { auditData, projectRoot } from '../../core/AuditStorage';
+import { fileState, noteState, noteType } from '../../types/types';
+import { currentFilter, isPathExcluded } from '../../core/FilterProvider';
+import { ProgressNode } from './ProgressNode';
 
 
-export class TreeProgressProvider implements vscode.TreeDataProvider<Node> {
-    private _onDidChangeTreeData: vscode.EventEmitter<Node | undefined> = new vscode.EventEmitter<Node | undefined>();
-    readonly onDidChangeTreeData: vscode.Event<Node | undefined> = this._onDidChangeTreeData.event;
-    private items: {[key: string]: Node} = {};
+export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNode> {
+    private _onDidChangeTreeData: vscode.EventEmitter<ProgressNode | undefined> = new vscode.EventEmitter<ProgressNode | undefined>();
+    readonly onDidChangeTreeData: vscode.Event<ProgressNode | undefined> = this._onDidChangeTreeData.event;
+    private items: { [key: string]: ProgressNode } = {};
 
     constructor() {
         vscode.commands.registerCommand('code-auditor.openFile', (file) => vscode.window.showTextDocument(file));
@@ -20,9 +21,17 @@ export class TreeProgressProvider implements vscode.TreeDataProvider<Node> {
         this._onDidChangeTreeData.fire();
     }
 
-    async getNodeFromUri(uri: vscode.Uri) {
-        if (this.items[uri.fsPath]) {
-            return this.items[uri.fsPath];
+    async revealNodeFromUri(tree: vscode.TreeView<ProgressNode>, uri: vscode.Uri) {
+        if (!tree.visible) {
+            return;
+        }
+
+        let node: ProgressNode = this.items[uri.fsPath]
+        if (node) {
+            if (currentFilter.reviewed && node.state == fileState.Reviewed) {
+                return;
+            }
+            tree.reveal(node, { select: true, focus: false });
         }
 
         if (uri.fsPath.startsWith(projectRoot)) {
@@ -35,18 +44,24 @@ export class TreeProgressProvider implements vscode.TreeDataProvider<Node> {
                 } else {
                     break;
                 }
-            } 
-            return this.items[uri.fsPath];
+            }
+            node = this.items[uri.fsPath];
+            if (node) {
+                if (currentFilter.reviewed && node.state == fileState.Reviewed) {
+                    return;
+                }
+                tree.reveal(node, { select: true, focus: false });
+            }
         }
     }
 
-    getTreeItem(element: Node): vscode.TreeItem {
+    getTreeItem(element: ProgressNode): vscode.TreeItem {
         return element;
     }
 
-    async getChildren(element?: Node): Promise<Node[]> {
+    async getChildren(element?: ProgressNode): Promise<ProgressNode[]> {
         const path = element ? element.uri.fsPath : projectRoot;
-        const nodes: Node[] = [];
+        const nodes: ProgressNode[] = [];
         if (!path) {
             return [];
         }
@@ -57,7 +72,7 @@ export class TreeProgressProvider implements vscode.TreeDataProvider<Node> {
         });
 
         for (const [name, state, num_issues, type] of children) {
-            const node = new Node(
+            const node = new ProgressNode(
                 vscode.Uri.file(join(path, name)),
                 state,
                 num_issues,
@@ -70,7 +85,7 @@ export class TreeProgressProvider implements vscode.TreeDataProvider<Node> {
         return nodes;
     }
 
-    async getParent(element: Node): Promise<Node | undefined> {
+    async getParent(element: ProgressNode): Promise<ProgressNode | undefined> {
         return element.parent;
     }
 
@@ -118,60 +133,3 @@ export class TreeProgressProvider implements vscode.TreeDataProvider<Node> {
     }
 }
 
-
-class Node extends vscode.TreeItem {
-    constructor(
-        public readonly uri: vscode.Uri,
-        public readonly state: fileState,
-        public readonly num_issues: number,
-        public readonly type: vscode.FileType,
-        public readonly parent?: Node
-    ) {
-        super(
-            uri,
-            type == vscode.FileType.Directory ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
-        );
-        this.uri = uri;
-        this.state = state;
-        this.num_issues = num_issues;
-        this.type = type;
-        this.parent = parent;
-
-        if (this.type === vscode.FileType.Directory) {
-            // this.contextValue = "code-auditor.progressExplorer.folder";
-        }
-
-        if (this.type === vscode.FileType.File) {
-            this.command = { command: 'code-auditor.openFile', title: "Open File", arguments: [uri], };
-            this.contextValue = state;
-            this.tooltip = `${num_issues.toString()} issues`;
-            // this.contextValue = "code-auditor.progressExplorer.file";
-
-            if (this.state == fileState.Reviewed) {
-                if (this.num_issues) {
-                    this.iconPath = {
-                        light: join(__filename, '..', '..', 'resources/light/circle-alert.svg'),
-                        dark: join(__filename, '..', '..', 'resources/dark/circle-alert.svg')
-                    };
-                } else {
-                    this.iconPath = {
-                        light: join(__filename, '..', '..', 'resources/light/pass.svg'),
-                        dark: join(__filename, '..', '..', 'resources/dark/pass.svg')
-                    };
-                }
-            } else {
-                if (this.num_issues) {
-                    this.iconPath = {
-                        light: join(__filename, '..', '..', 'resources/light/info-grey.svg'),
-                        dark: join(__filename, '..', '..', 'resources/dark/info-grey.svg')
-                    };
-                } else {
-                    this.iconPath = {
-                        light: join(__filename, '..', '..', 'resources/light/circle-large-outline.svg'),
-                        dark: join(__filename, '..', '..', 'resources/dark/circle-large-outline.svg')
-                    };
-                }
-            }
-        }
-    }
-}
