@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { excludePath, newNote, removeNote, setFileState, setNoteState, setNoteType } from './NoteProvider';
-import { importSlitherReport, importSemgrepReport } from '../modules/import/Imports';
-import { generateReport, generateReferences } from '../modules/report/Reports';
+import { excludePath, newNote, removeNote, setFileState, setNoteState, setNoteType } from './noteProvider';
+import { importSlitherReport, importSemgrepReport } from '../modules/import/imports';
+import { generateReport, generateReferences } from '../modules/report/reports';
 import { noteState, fileState, noteType } from '../types/types';
-import { toggleFilter } from './FilterProvider';
+import { toggleFilter } from './filterProvider';
 
 let outReport: vscode.OutputChannel;
 let outRefs: vscode.OutputChannel;

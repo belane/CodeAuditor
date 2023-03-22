@@ -1,4 +1,4 @@
-export interface ISlitherData {
+export interface SlitherData {
   success: boolean;
   results: {
       detectors: {

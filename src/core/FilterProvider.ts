@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { join } from 'path';
 import { statSync } from 'fs';
-import { auditData, CodeAuditorFile } from './AuditStorage';
+import { auditData, CodeAuditorFile } from './auditStorage';
 import { noteType, noteState, NoteCollection, FileCollection } from '../types/types';
 
 

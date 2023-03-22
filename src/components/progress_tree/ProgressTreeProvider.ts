@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 import { join, sep } from 'path';
 import { statSync, readdirSync } from 'fs';
-import { auditData, projectRoot } from '../../core/AuditStorage';
+import { auditData, projectRoot } from '../../core/auditStorage';
 import { fileState, noteState, noteType } from '../../types/types';
-import { currentFilter, isPathExcluded } from '../../core/FilterProvider';
-import { ProgressNode } from './ProgressNode';
+import { currentFilter, isPathExcluded } from '../../core/filterProvider';
+import { ProgressNode } from './progressNode';
 
 
 export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNode> {

@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { existsSync } from 'fs';
 import { parse, join } from 'path';
-import { auditData, projectRoot } from '../../core/AuditStorage';
-import { listFilterNotes, currentFilter } from '../../core/FilterProvider';
-import { NoteNode } from './NoteNode';
+import { auditData, projectRoot } from '../../core/auditStorage';
+import { listFilterNotes, currentFilter } from '../../core/filterProvider';
+import { NoteNode } from './noteNode';
 
 
 export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {

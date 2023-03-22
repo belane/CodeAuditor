@@ -1,4 +1,4 @@
-export interface ISemgrepData {
+export interface SemgrepData {
   paths: any;
   results: {
       check_id: string;

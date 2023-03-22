@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { triggerUpdateDecorations } from './components/decoration/Decorator';
-import { ProgressTreeProvider } from './components/progress_tree/ProgressTreeProvider';
-import { auditDataInit } from './core/AuditStorage';
-import { registerExtensionCommands } from './core/Commands';
-import { NoteTreeProvider } from './components/note_tree/NoteTreeProvider';
+import { triggerUpdateDecorations } from './components/decoration/decorator';
+import { ProgressTreeProvider } from './components/progress_tree/progressTreeProvider';
+import { auditDataInit } from './core/auditStorage';
+import { registerExtensionCommands } from './core/commands';
+import { NoteTreeProvider } from './components/note_tree/noteTreeProvider';
 
 
 export function activate(context: vscode.ExtensionContext) {

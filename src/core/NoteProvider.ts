@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { basename } from 'path';
-import { auditDataSave, auditData, projectRoot } from './AuditStorage';
-import { updateDecorations } from '../components/decoration/Decorator';
+import { auditDataSave, auditData, projectRoot } from './auditStorage';
+import { updateDecorations } from '../components/decoration/decorator';
 import { fileState, Note, noteState, noteType } from '../types/types';
 
 

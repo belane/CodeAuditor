@@ -2,10 +2,10 @@ import * as vscode from 'vscode';
 import { existsSync, readFileSync } from 'fs';
 import { join, normalize, basename } from 'path';
 import { fileState, Note, noteState, noteType } from '../../types/types';
-import { auditData, auditDataSave, projectRoot } from '../../core/AuditStorage';
-import { updateDecorations } from '../../components/decoration/Decorator';
-import { ISemgrepData } from './ISemgrepData';
-import { ISlitherData } from './ISlitherData';
+import { auditData, auditDataSave, projectRoot } from '../../core/auditStorage';
+import { updateDecorations } from '../../components/decoration/decorator';
+import { SemgrepData } from './semgrepData';
+import { SlitherData } from './slitherData';
 
 
 export const noteSeparator = " // ";
@@ -32,7 +32,7 @@ export async function importSlitherReport() {
             continue;
         }
 
-        let data: ISlitherData;
+        let data: SlitherData;
         const fileContent = readFileSync(importFile.fsPath);
         const importFileName = basename(importFile.fsPath);
         try {
@@ -127,7 +127,7 @@ export async function importSemgrepReport() {
             continue;
         }
 
-        let data: ISemgrepData;
+        let data: SemgrepData;
         const fileContent = readFileSync(importFile.fsPath);
         const importFileName = basename(importFile.fsPath);
         try {

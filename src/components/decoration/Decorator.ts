@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { noteState, noteType } from '../../types/types';
-import { auditData, projectRoot } from '../../core/AuditStorage';
-import { noteSeparator } from '../../modules/import/Imports';
-import { noteNoteDecorator, issueNoteDecorator, openNoteDecorator, discardNoteDecorator } from './DecorationTypes';
+import { auditData, projectRoot } from '../../core/auditStorage';
+import { noteSeparator } from '../../modules/import/imports';
+import { noteNoteDecorator, issueNoteDecorator, openNoteDecorator, discardNoteDecorator } from './decorationTypes';
 
 
 let timeout: NodeJS.Timer | undefined = undefined;
