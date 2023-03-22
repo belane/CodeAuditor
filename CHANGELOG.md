@@ -2,9 +2,10 @@
 
 ## 0.3.5
 
-- Audit progress tree view follows open file.
-- Audit notes tree view follows open file.
+- Audit Progress explorer follows open file.
+- Audit Notes explorer follows open file.
 - Project refactor.
+- Filter by files with notes in the progress explorer.
 
 ## 0.3.4
 

@@ -15,7 +15,8 @@ export const currentFilter: filerOptions = {
     open: true,
     confirmed: true,
     discarded: false,
-    reviewed: false
+    reviewed: false,
+    outlined: false
 };
 
 export function toggleFilter(filter: string) {
@@ -23,7 +24,7 @@ export function toggleFilter(filter: string) {
         currentFilter[filter] = !currentFilter[filter];
     }
     vscode.commands.executeCommand('setContext', 'code-auditor.filter.' + filter, currentFilter[filter]);
-    if (filter == "reviewed") {
+    if (filter == "reviewed" || filter == "outlined") {
         vscode.commands.executeCommand('code-auditor.progressExplorer.refresh');
     } else {
         vscode.commands.executeCommand('code-auditor.noteExplorer.refresh');

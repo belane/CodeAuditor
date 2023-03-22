@@ -235,6 +235,22 @@
 					"light": "resources/light/filter.svg",
 					"dark": "resources/dark/filter.svg"
 				}
+			},
+			{
+				"command": "code-auditor.filter.outlinedOn",
+				"title": "Show all files",
+				"icon": {
+					"light": "resources/dark/zoom-in.svg",
+					"dark": "resources/light/zoom-in.svg"
+				}
+			},
+			{
+				"command": "code-auditor.filter.outlinedOff",
+				"title": "Show files with notes",
+				"icon": {
+					"light": "resources/light/zoom-in.svg",
+					"dark": "resources/dark/zoom-in.svg"
+				}
 			}
 		],
 		"menus": {
@@ -340,14 +356,24 @@
 					"group": "navigation@4"
 				},
 				{
+					"command": "code-auditor.filter.outlinedOn",
+					"when": "view == code-auditor.progressExplorer && code-auditor.filter.outlined",
+					"group": "navigation@0"
+				},
+				{
+					"command": "code-auditor.filter.outlinedOff",
+					"when": "view == code-auditor.progressExplorer && !code-auditor.filter.outlined",
+					"group": "navigation@0"
+				},
+				{
 					"command": "code-auditor.filter.progressOn",
 					"when": "view == code-auditor.progressExplorer && code-auditor.filter.reviewed",
-					"group": "navigation@0"
+					"group": "navigation@1"
 				},
 				{
 					"command": "code-auditor.filter.progressOff",
 					"when": "view == code-auditor.progressExplorer && !code-auditor.filter.reviewed",
-					"group": "navigation@0"
+					"group": "navigation@1"
 				}
 			],
 			"commandPalette": [
@@ -417,6 +443,14 @@
 				},
 				{
 					"command": "code-auditor.filter.progressOff",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.outlinedOn",
+					"when": "false"
+				},
+				{
+					"command": "code-auditor.filter.outlinedOff",
 					"when": "false"
 				}
 			]

@@ -98,4 +98,10 @@ export function registerExtensionCommands(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.progressOff', () => {
 		toggleFilter(fileState.Reviewed);
 	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.outlinedOn', () => {
+		toggleFilter('outlined');
+	}));
+	context.subscriptions.push(vscode.commands.registerCommand('code-auditor.filter.outlinedOff', () => {
+		toggleFilter('outlined');
+	}));
 }

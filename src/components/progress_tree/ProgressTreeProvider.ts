@@ -27,14 +27,7 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
         }
 
         let node: ProgressNode = this.items[uri.fsPath];
-        if (node) {
-            if (currentFilter.reviewed && node.state == fileState.Reviewed) {
-                return;
-            }
-            tree.reveal(node, { select: true, focus: false });
-        }
-
-        if (uri.fsPath.startsWith(projectRoot)) {
+        if (!node && uri.fsPath.startsWith(projectRoot)) {
             const paths = uri.fsPath.slice(projectRoot.length + 1).split(sep);
             let current_path = projectRoot;
             for (const p of paths) {
@@ -46,12 +39,15 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
                 }
             }
             node = this.items[uri.fsPath];
-            if (node) {
-                if (currentFilter.reviewed && node.state == fileState.Reviewed) {
-                    return;
-                }
-                tree.reveal(node, { select: true, focus: false });
+        }
+        if (node) {
+            if (currentFilter.reviewed && node.state == fileState.Reviewed) {
+                return;
             }
+            if (currentFilter.outlined && node.num_issues < 1) {
+                return;
+            }
+            tree.reveal(node, { select: true, focus: false });
         }
     }
 
@@ -115,17 +111,17 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
                     continue;
                 }
             }
-            // else {
-            //     // let hasNotes = auditData.files[file]?.notes != undefined;
-            //     if (auditData.files[file]?.notes == undefined) {
-            //         // continue;
-            //     }
-            // }
 
             let num_issues = 0;
-            if (getInfo && auditData.files[file]?.notes) {
-                num_issues = Object.values(auditData.files[file].notes).filter(i => i.type == noteType.Issue && i.state != noteState.Discarded).length;
-                // if (num_issues < 1) { continue; }
+            if (getInfo && stat.isFile()) {
+                if (auditData.files[file]?.notes) {
+                    num_issues = Object.values(auditData.files[file].notes).filter(i => i.type == noteType.Issue && i.state != noteState.Discarded).length;
+                }
+                if (currentFilter.outlined) {
+                    if (num_issues < 1) {
+                        continue;
+                    }
+                }
             }
             result.push([child, state, num_issues, stat.isFile() ? vscode.FileType.File : stat.isDirectory() ? vscode.FileType.Directory : vscode.FileType.Unknown]);
         }
