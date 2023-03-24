@@ -1,11 +1,18 @@
 import * as vscode from 'vscode';
 import { join, sep } from 'path';
-import { statSync, readdirSync } from 'fs';
+import { readdirSync } from 'fs';
 import { auditData, projectRoot } from '../../core/auditStorage';
 import { fileState, noteState, noteType } from '../../types/types';
 import { currentFilter, isPathExcluded } from '../../core/filterProvider';
 import { ProgressNode } from './progressNode';
 
+
+interface FileInfo {
+    name: string;
+    state: fileState;
+    num_issues: number;
+    type: vscode.FileType;
+}
 
 export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNode> {
     private _onDidChangeTreeData: vscode.EventEmitter<ProgressNode | undefined> = new vscode.EventEmitter<ProgressNode | undefined>();
@@ -56,23 +63,20 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
     }
 
     async getChildren(element?: ProgressNode): Promise<ProgressNode[]> {
-        const path = element ? element.uri.fsPath : projectRoot;
         const nodes: ProgressNode[] = [];
-        if (!path) {
-            return [];
-        }
+        const path = element ? element.uri.fsPath : projectRoot;
         const children = await this.readDirectory(path);
         children.sort((a, b) => {
-            if (a[3] === b[3]) { return a[0].localeCompare(b[0]); }
-            return a[3] === vscode.FileType.Directory ? -1 : 1;
+            if (a.type === b.type) { return a.name.localeCompare(b.name); }
+            return a.type === vscode.FileType.Directory ? -1 : 1;
         });
 
-        for (const [name, state, num_issues, type] of children) {
+        for (const child of children) {
             const node = new ProgressNode(
-                vscode.Uri.file(join(path, name)),
-                state,
-                num_issues,
-                type,
+                vscode.Uri.file(join(path, child.name)),
+                child.state,
+                child.num_issues,
+                child.type,
                 element
             );
             nodes.push(node);
@@ -85,45 +89,57 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
         return element.parent;
     }
 
-    async readDirectory(dirPath: string, getInfo = true): Promise<[string, fileState, number, vscode.FileType][]> {
-        const children = readdirSync(dirPath);
-        const result: [string, fileState, number, vscode.FileType][] = [];
+    async readDirectory(dirPath: string, depth = 0): Promise<FileInfo[]> {
+        const result: FileInfo[] = [];
+        if (depth > 10_000) { return result; }
+        const children = readdirSync(dirPath, { withFileTypes: true }).sort(
+            (a, b) => { return a.isFile() ? -1 : 1; }
+        );
         for (const child of children) {
-            if (isPathExcluded(dirPath, child)) {
+            if (depth > 0 && result.length != 0) { break; }
+
+            if (isPathExcluded(dirPath, child.name)) {
                 continue;
             }
 
-            const fullPath = join(dirPath, child);
+            const fullPath = join(dirPath, child.name);
             const file = fullPath.slice(projectRoot.length + 1);
-
             let state = auditData.files[file]?.state;
+            let num_issues = 0;
+            let type: vscode.FileType;
+
             if (!Object.values(fileState).includes(state)) {
                 state = fileState.Pending;
             }
             if (currentFilter.reviewed && state == fileState.Reviewed) {
                 continue;
             }
-
-            const stat = statSync(fullPath);
-            if (stat.isDirectory()) {
-                const known_children = await this.readDirectory(fullPath, false);
+            if (child.isFile()) {
+                type = vscode.FileType.File;
+                if (auditData.files[file]?.notes) {
+                    num_issues = Object.values(auditData.files[file].notes).filter(i => i.state != noteState.Discarded).length;
+                }
+                if (currentFilter.outlined && num_issues < 1) {
+                    continue;
+                }
+            }
+            else if (child.isDirectory()) {
+                type = vscode.FileType.Directory;
+                const known_children = await this.readDirectory(fullPath, depth + 1);
                 if (Object.keys(known_children).length === 0) {
                     continue;
                 }
             }
-
-            let num_issues = 0;
-            if (getInfo && stat.isFile()) {
-                if (auditData.files[file]?.notes) {
-                    num_issues = Object.values(auditData.files[file].notes).filter(i => i.type == noteType.Issue && i.state != noteState.Discarded).length;
-                }
-                if (currentFilter.outlined) {
-                    if (num_issues < 1) {
-                        continue;
-                    }
-                }
+            else {
+                continue;
             }
-            result.push([child, state, num_issues, stat.isFile() ? vscode.FileType.File : stat.isDirectory() ? vscode.FileType.Directory : vscode.FileType.Unknown]);
+
+            result.push({
+                name: child.name,
+                state: state,
+                num_issues: num_issues,
+                type: type
+            });
         }
         return Promise.resolve(result);
     }

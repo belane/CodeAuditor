@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.6
+
+- Progress explorer bug fixes and improved performance.
+
 ## 0.3.5
 
 - Audit Progress explorer follows open file.
