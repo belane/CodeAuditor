@@ -25,7 +25,7 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
     }
 
     public refresh(): void {
-        this._onDidChangeTreeData.fire();
+        this._onDidChangeTreeData.fire(undefined);
     }
 
     async revealNodeFromUri(tree: vscode.TreeView<ProgressNode>, uri: vscode.Uri) {

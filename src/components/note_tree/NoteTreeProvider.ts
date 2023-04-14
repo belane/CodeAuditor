@@ -21,7 +21,7 @@ export class NoteTreeProvider implements vscode.TreeDataProvider<NoteNode> {
 
     public refresh(): void {
         this.items = {};
-        this._onDidChangeTreeData.fire();
+        this._onDidChangeTreeData.fire(undefined);
     }
 
     async revealNodeFromUri(tree: vscode.TreeView<NoteNode>, uri: vscode.Uri) {

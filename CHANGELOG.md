@@ -3,6 +3,7 @@
 ## 0.3.6
 
 - Progress explorer bug fixes and improved performance.
+- Updated dependencies.
 
 ## 0.3.5
 
