@@ -20,7 +20,7 @@ jobs:
     - name: Package VS Code extension
       uses: nhedger/package-vscode-extension@main
       with:
-          extensionPath: ./src
+          extensionPath: ./
           packagePath: ${{ env.DIST_PATH }}
 
   Release:
@@ -35,7 +35,7 @@ jobs:
     - name: Package VS Code extension
       uses: nhedger/package-vscode-extension@main
       with:
-          extensionPath: ./src
+          extensionPath: ./
           packagePath: ${{ env.DIST_PATH }}
       
     - name: Publish Release (github)
