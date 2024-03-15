@@ -1,0 +1,46 @@
+name: Generate release
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  Compile:
+    strategy:
+      matrix:
+        node-version: ['20.x']
+
+    # needs: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Dependences
+      run: npm i
+    - name: Prepublish
+      run: npm run vscode:prepublish
+    - name: Package
+      run: npm run package
+
+  Release:
+    if: github.ref == 'refs/heads/main' && startsWith(github.repository, 'belane/')
+    needs: Compile
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Publish Release (github)
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        title: "v${{ github.event.inputs.version }}"
+        automatic_release_tag: "v${{ github.event.inputs.version }}"
+        files: /build/*
