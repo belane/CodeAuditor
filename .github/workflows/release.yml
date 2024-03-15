@@ -1,0 +1,40 @@
+name: Generate release
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  DIST_PATH: /tmp/dist
+  
+jobs:
+
+  Release:
+    if: github.ref == 'refs/heads/main' && startsWith(github.repository, 'belane/')
+    # needs: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Get version
+      id: get_version
+      run: |
+        sudo apt install xmlstarlet
+        find src -name Directory.Build.props | xargs xmlstarlet sel -N i=http://schemas.microsoft.com/developer/msbuild/2003 -t -v "concat('::set-output name=version::v',//i:VersionPrefix/text())" | xargs echo
+    
+    - name: Check tag
+      id: check_tag
+      run: curl -s -I ${{ format('https://github.com/{0}/releases/tag/{1}', github.repository, steps.get_version.outputs.version) }} | head -n 1 | cut -d$' ' -f2 | xargs printf "::set-output name=statusCode::%s" | xargs echo
+
+    - name: Publish Release (github)
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        title: "v${{ github.event.inputs.version }}"
+        automatic_release_tag: "v${{ github.event.inputs.version }}"
+        files: ${{ env.DIST_PATH }}/*
