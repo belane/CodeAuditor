@@ -27,16 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    
-    - name: Dependences
-      run: npm i
-    - name: Prepublish
-      run: npm run vscode:prepublish
-    - name: Package
-      run: npm run package
-      
     - name: Publish Release (github)
       uses: marvinpinto/action-automatic-releases@latest
       with:
