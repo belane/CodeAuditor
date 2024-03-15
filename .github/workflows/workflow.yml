@@ -2,6 +2,7 @@ name: Generate release
 
 on:
   pull_request:
+  workflow_dispatch:
 
 env:
   DIST_PATH: /tmp/dist
