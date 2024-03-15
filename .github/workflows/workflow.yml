@@ -1,0 +1,45 @@
+name: Generate release
+
+on:
+  pull_request:
+
+env:
+  DIST_PATH: /tmp/dist
+  
+jobs:
+
+  Compile:
+    # needs: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Package VS Code extension
+      uses: nhedger/package-vscode-extension@main
+      with:
+          extensionPath: ${{ env.DIST_PATH }}
+
+  Release:
+    if: github.ref == 'refs/heads/main' && startsWith(github.repository, 'belane/')
+    needs: Compile
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Package VS Code extension
+      uses: nhedger/package-vscode-extension@main
+      with:
+          extensionPath: ${{ env.DIST_PATH }}
+      
+    - name: Publish Release (github)
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        title: "v${{ github.event.inputs.version }}"
+        automatic_release_tag: "v${{ github.event.inputs.version }}"
+        files: ${{ env.DIST_PATH }}/*
