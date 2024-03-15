@@ -20,7 +20,8 @@ jobs:
     - name: Package VS Code extension
       uses: nhedger/package-vscode-extension@main
       with:
-          extensionPath: ${{ env.DIST_PATH }}
+          extensionPath: ./src
+          packagePath: ${{ env.DIST_PATH }}
 
   Release:
     if: github.ref == 'refs/heads/main' && startsWith(github.repository, 'belane/')
@@ -34,7 +35,8 @@ jobs:
     - name: Package VS Code extension
       uses: nhedger/package-vscode-extension@main
       with:
-          extensionPath: ${{ env.DIST_PATH }}
+          extensionPath: ./src
+          packagePath: ${{ env.DIST_PATH }}
       
     - name: Publish Release (github)
       uses: marvinpinto/action-automatic-releases@latest
