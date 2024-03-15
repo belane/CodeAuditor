@@ -4,9 +4,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  DIST_PATH: /tmp/dist
-  
 jobs:
 
   Compile:
@@ -17,11 +14,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     
-    - name: Package VS Code extension
-      uses: nhedger/package-vscode-extension@main
-      with:
-          extensionPath: ./
-          packagePath: ${{ env.DIST_PATH }}
+    - name: Prepublish
+      run: npm run vscode:prepublish
+    - name: Package
+      run: npm run package
 
   Release:
     if: github.ref == 'refs/heads/main' && startsWith(github.repository, 'belane/')
@@ -32,11 +28,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     
-    - name: Package VS Code extension
-      uses: nhedger/package-vscode-extension@main
-      with:
-          extensionPath: ./
-          packagePath: ${{ env.DIST_PATH }}
+    - name: Prepublish
+      run: npm run vscode:prepublish
+    - name: Package
+      run: npm run package
       
     - name: Publish Release (github)
       uses: marvinpinto/action-automatic-releases@latest
@@ -45,4 +40,4 @@ jobs:
         prerelease: false
         title: "v${{ github.event.inputs.version }}"
         automatic_release_tag: "v${{ github.event.inputs.version }}"
-        files: ${{ env.DIST_PATH }}/*
+        files: /build/*
