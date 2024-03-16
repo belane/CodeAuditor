@@ -39,6 +39,10 @@ export class ProgressTreeProvider implements vscode.TreeDataProvider<ProgressNod
             let current_path = projectRoot;
             for (const p of paths) {
                 current_path = vscode.Uri.parse(current_path + sep + p).toString(true);
+                // TODO: Temp fix for new VSCode URI
+                if(current_path.startsWith("file://")) {
+                    current_path = current_path.slice(7);
+                }
                 if (this.items[current_path] && this.items[current_path].type == vscode.FileType.Directory) {
                     await this.getChildren(this.items[current_path]);
                 } else {
